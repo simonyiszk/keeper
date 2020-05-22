@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Alma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{~/static/ajaxstuff.js}"></script>
+
+</head>
+<body>
+
+
+<object th:fragment="header">
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img width="70" height="50" src="https://sem.sch.bme.hu/wp-content/uploads/2019/02/cropped-semlogo-10.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item nav-link">
+                    Rangod:
+                </li>
+                <li th:each="role : ${user.getRoles()}" class="nav-item nav-link" th:text="${role}">
+
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user?.getRoles().contains('ROLE_MEMBER')}">
+                    <a class="nav-link" href="/admin">Csanád részleg</a>
+                </li>
+                <li class="nav-item" th:if="${user} == null">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item" th:unless="${user} == null">
+                    <a class="nav-link" href="/logout" th:text="${'Log out from '+user.getEmail()}">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</object>
+
+
+</body>
+</html>
