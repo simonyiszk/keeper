@@ -6,6 +6,7 @@ import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.DeviceRepository;
 import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.UserRepository;
+import com.sem.keeper.service.LoanRequestService;
 import com.sem.keeper.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,9 @@ public class LoanController {
 
     @Autowired
     LoanService loanService;
+
+    @Autowired
+    LoanRequestService loanRequestService;
 
     @GetMapping("/list")
     public String list(HttpSession session, Model model){
@@ -104,5 +108,24 @@ public class LoanController {
         Optional<UserEntity> tarhaUser = userRepository.findById(Long.parseLong(userid));
         loanService.newLoan(device,user,tarhaUser.get());
         return new RedirectView("/loans/list");
+    }
+
+    @GetMapping("/request/{deviceid}")
+    public String requestDevice(HttpSession session, Model model,
+                                @PathVariable("deviceid") String deviceid){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
+        model.addAttribute("user",user);
+        model.addAttribute("device",device);
+        return "confirmrequest";
+    }
+
+    @GetMapping("/request/{deviceid}/ok")
+    public RedirectView requestDeviceOk(HttpSession session, Model model,
+                                       @PathVariable("deviceid") String deviceid){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
+        loanRequestService.addLoanRequest(user, device);
+        return new RedirectView("/");
     }
 }

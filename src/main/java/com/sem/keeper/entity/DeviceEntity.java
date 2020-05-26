@@ -1,6 +1,9 @@
 package com.sem.keeper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sem.keeper.model.DeviceRegDto;
 import lombok.*;
 
@@ -30,7 +33,9 @@ public class DeviceEntity implements Serializable {
         this.description = description;
     }
 
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "deviceEntity",
             cascade = CascadeType.ALL,
             orphanRemoval = true)

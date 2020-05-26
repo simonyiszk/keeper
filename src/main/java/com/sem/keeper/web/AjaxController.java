@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @Service
 @RestController
@@ -24,6 +26,11 @@ public class AjaxController {
     public Iterable<DeviceEntity> devicePag(@RequestParam int page, @RequestParam int pageSize){
         Pageable pageable = PageRequest.of(page, pageSize);
         return devices.findAll(pageable);
+    }
+
+    @GetMapping("/devicesearch")
+    public List<DeviceEntity> searchDevice(@RequestParam String term){
+        return devices.findByNameContainingIgnoreCase(term);
     }
 }
 

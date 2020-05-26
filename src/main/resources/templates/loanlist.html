@@ -27,8 +27,8 @@
             <td th:text="${element.getDeviceEntity().getName()}">Mark</td>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
-            <td th:text="${element.getBackDatePlanned()}">Mark</td>
-            <td th:text="${element.getTakeDate()}">Mark</td>
+            <td th:text="${{element.getBackDatePlanned()}}">Mark</td>
+            <td th:text="${{element.getTakeDate()}}">Mark</td>
             <td>
                 <a th:href="${'/loan/return/'+element.getId()}">
                     <button type="button" class="btn btn-success">Visszavesz</button>

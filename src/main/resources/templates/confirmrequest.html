@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wireframe::head">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Eszközök</title>
+</head>
+<body>
+
+<div th:replace="wireframe :: header"></div>
+
+
+<div class="container">
+    <h1 th:text="${device.getName()+' rekvesztálása'}">Lyukrepesztő análfúró kunyizása</h1>
+
+    <a th:href="@{__${#httpServletRequest.requestURI}__/ok}">
+        <button type="button" class="btn btn-success">Zsa</button>
+    </a>
+    <a th:href="@{/}">
+        <button type="button" class="btn btn-danger">NEIN</button>
+    </a>
+</div>
+</body>
+</html>

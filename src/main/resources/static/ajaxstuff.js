@@ -12,9 +12,18 @@ async function loaddevicesroot(page, pagesize) {
         neu.appendChild(document.createElement("th"))
         neu.appendChild(document.createElement("td"))
         neu.appendChild(document.createElement("td"))
+        neu.appendChild(document.createElement("td"))
         neu.children[0].innerText=device.id;
         neu.children[1].innerText=device.name;
         neu.children[2].innerText=device.description;
+
+        let theA=document.createElement("a")
+        let theButton = document.createElement("button")
+        theButton.classList="btn btn-primary"
+        theButton.innerText="Rekvesztálás"
+        theA.appendChild(theButton)
+        theA.href="loan/request/"+device.id
+        neu.children[3].appendChild(theA)
         table.appendChild(neu);
     }
     semlast=res.last;

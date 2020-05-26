@@ -13,4 +13,6 @@ public interface DeviceRepository extends PagingAndSortingRepository<DeviceEntit
     List<DeviceEntity> findByDescription(String description);
 
     DeviceEntity findById(long id);
+
+    List<DeviceEntity> findByNameContainingIgnoreCase(String name);
 }
