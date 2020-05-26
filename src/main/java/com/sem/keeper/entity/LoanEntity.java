@@ -1,5 +1,6 @@
 package com.sem.keeper.entity;
 
+import com.sem.keeper.service.LoanService;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,5 +38,9 @@ public class LoanEntity implements Serializable {
 
     @Column(name = "back_date_real")
     private LocalDateTime backDateReal;
+
+    public boolean isLate(){
+        return LocalDateTime.now().isAfter(backDatePlanned);
+    }
 
 }

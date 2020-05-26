@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface LoanRepository extends PagingAndSortingRepository<LoanEntity, Long> {
@@ -14,4 +15,6 @@ public interface LoanRepository extends PagingAndSortingRepository<LoanEntity, L
     List<LoanEntity> findByElvitte(UserEntity elvitte);
 
     List<LoanEntity> findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(DeviceEntity deviceEntity);
+
+    List<LoanEntity> findByVisszavetteIsNullOrderByTakeDate();
 }

@@ -44,6 +44,9 @@
                 <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
                     <a class="nav-link" href="/loan/new">Cucc kiadása</a>
                 </li>
+                <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
+                    <a class="nav-link" href="/loan/list">Kint lévő cuccok</a>
+                </li>
                 <li class="nav-item" th:if="${user} == null">
                     <a class="nav-link" href="/login">Login</a>
                 </li>

@@ -39,6 +39,10 @@ public class UserEntity implements Serializable {
 
     private boolean valid;
 
+    public String getFullName(){
+        return firstName+' '+lastName;
+    }
+
     /*
     @OneToMany(mappedBy = "elvitte",
             cascade = CascadeType.ALL,

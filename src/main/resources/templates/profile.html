@@ -17,13 +17,15 @@
             <th scope="col">Eszköz</th>
             <th scope="col">Leírás</th>
             <th scope="col">Elvitted</th>
+            <th scope="col">Határidő</th>
         </tr></thead>
         <tbody id="tablebody">
-        <tr th:each="element: ${loans}" th:classappend="${element.getBackDateReal()} ? table-secondary ">
+        <tr th:classappend="${element.getBackDateReal()} ? 'table-secondary' " th:each="element: ${loans}">
             <th scope="row" th:text="${element.getId()}">1</th>
             <td th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</td>
             <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
-            <td th:text="${element.getTakeDate()}">alma</td>
+            <td th:text="${{element.getTakeDate()}}">alma</td>
+            <td th:text="${{element.getBackDatePlanned()}}">alma</td>
 
         </tr>
         </tbody>
