@@ -107,7 +107,7 @@ public class LoanController {
         DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
         Optional<UserEntity> tarhaUser = userRepository.findById(Long.parseLong(userid));
         loanService.newLoan(device,user,tarhaUser.get());
-        return new RedirectView("/loans/list");
+        return new RedirectView("/loan/list");
     }
 
     @GetMapping("/request/{deviceid}")
