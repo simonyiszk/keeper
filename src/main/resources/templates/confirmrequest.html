@@ -11,7 +11,13 @@
 <div th:replace="wireframe :: header"></div>
 
 
-<div class="container">
+<div class="container" th:if="${user.getRoles().contains('ROLE_MEMBER')}">
+    <h1>
+        Was the kukkendáré bist du michen-machen? Gehen Sie und add ki dichselbst!
+    </h1>
+</div>
+
+<div class="container" th:unless="${user.getRoles().contains('ROLE_MEMBER')}">
     <h1 th:text="${device.getName()+' rekvesztálása'}">Lyukrepesztő análfúró kunyizása</h1>
 
     <a th:href="@{__${#httpServletRequest.requestURI}__/ok}">
