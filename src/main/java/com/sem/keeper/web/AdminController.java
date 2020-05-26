@@ -33,17 +33,10 @@ public class AdminController {
     UserRepository users;
 
     @Autowired
-    DeviceRepository deviceRepo;
-
-    @Autowired
-    LoanRepository loanRepo;
-
-    @Autowired
     UserService userService;
 
-    @GetMapping("/users/makemember")
+    @GetMapping("/makemember")
     public RedirectView makeMember(@RequestParam String useremail){
-        System.out.println(userService);
         UserEntity user = userService.findByEmail(useremail);
         if(user != null){
             userService.makeMember(user);
@@ -51,14 +44,34 @@ public class AdminController {
         return new RedirectView("/admin/users");
     }
 
+    @GetMapping("/unmakemember")
+    public RedirectView unMakeMember(@RequestParam String useremail){
+        UserEntity user = userService.findByEmail(useremail);
+        if(user != null){
+            userService.unMakeMember(user);
+        }
+        return new RedirectView("/admin/users");
+    }
+
+    @GetMapping("/deleteuser")
+    public RedirectView deleteuser(@RequestParam String useremail){
+        UserEntity user = userService.findByEmail(useremail);
+        if(user != null){
+            userService.deleteUser(user);
+        }
+        return new RedirectView("/admin/users");
+    }
+
     @GetMapping("/users")
-    public String listUsers(WebRequest request, Model model) {
+    public String listUsers(HttpSession session, Model model) {
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("users", users.findAll());
         return "userlist";
     }
 
     @GetMapping("")
-    public String root(Model model, Principal principal, HttpSession session){
+    public String root(Model model, HttpSession session){
         //
         // HttpSession session = request.getSession();
         UserEntity user = (UserEntity) session.getAttribute("user");

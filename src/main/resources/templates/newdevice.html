@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org/">
+<body>
+<h1>form</h1>
+<form action="/" enctype="utf8" method="POST" th:action="@{${backUrl}}" th:object="${newdevice}">
+    <div>
+        <label>Neve</label>
+        <input th:field="*{name}"/>
+        <p th:each="error: ${#fields.errors('name')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label>Leírás</label>
+        <input th:field="*{description}"/>
+        <p th:each="error : ${#fields.errors('description')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label>RFID tag (nem kötelező)</label>
+        <input type="email" th:field="*{rfid}"/>
+        <p th:each="error : ${#fields.errors('rfid')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label>Vonalkód (nem kötelező)</label>
+        <input type="password" th:field="*{barcode}"/>
+        <p th:each="error : ${#fields.errors('barcode')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <button type="submit">zsa</button>
+</form>
+
+</body>
+</html>

@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class LoanEntity implements Serializable {
 
     @Id
@@ -28,10 +29,13 @@ public class LoanEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private DeviceEntity deviceEntity;
 
-    private java.util.Date take_date;
+    @Column(name = "take_date")
+    private LocalDateTime takeDate;
 
-    private java.util.Date back_date_planned;
+    @Column(name = "back_date_planned")
+    private LocalDateTime backDatePlanned;
 
-    private java.util.Date back_date_real;
+    @Column(name = "back_date_real")
+    private LocalDateTime backDateReal;
 
 }

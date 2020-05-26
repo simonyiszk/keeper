@@ -1,6 +1,10 @@
 package com.sem.keeper.web;
 
+import com.sem.keeper.entity.LoanEntity;
+import com.sem.keeper.entity.UserEntity;
+import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.UserRepository;
+import com.sem.keeper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,23 +14,26 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
 
     @Autowired
-    private static UserRepository userRepository;
+    private UserService userService;
 
-    @GetMapping
-    public String profileRoot(HttpServletRequest request, Model model){
+    @Autowired
+    private LoanRepository loanRepository;
 
-        HttpSession currentSession = request.getSession();
+    @GetMapping("")
+    public String profileRoot(HttpSession session, Model model){
 
-        System.out.println(currentSession.getAttribute("user"));
-
-        model.addAttribute("user", currentSession.getAttribute("user"));
-        System.out.println(model.getAttribute("user"));
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        List<LoanEntity> loans = loanRepository.findByElvitte(user);
+        //List<LoanEntity> loans = null;
+        model.addAttribute("user",user);
+        model.addAttribute("loans", loans);
         return "profile";
     }
 }

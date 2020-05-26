@@ -1,5 +1,6 @@
 package com.sem.keeper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,13 +33,16 @@ public class UserEntity implements Serializable {
 
     private String room;
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
     private boolean valid;
 
+    /*
     @OneToMany(mappedBy = "elvitte",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Collection<LoanEntity> loanEntities;
+     */
 }

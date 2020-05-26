@@ -16,7 +16,7 @@
 <object th:fragment="header">
 <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" th:href="@{/}">
             <img width="70" height="50" src="https://sem.sch.bme.hu/wp-content/uploads/2019/02/cropped-semlogo-10.png" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,22 +27,29 @@
                 <li class="nav-item nav-link">
                     Rangod:
                 </li>
-                <li th:each="role : ${user.getRoles()}" class="nav-item nav-link" th:text="${role}">
+                <li th:each="role : ${user?.getRoles()}" class="nav-item nav-link" th:text="${role}">
 
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item" th:if="${user?.getRoles().contains('ROLE_MEMBER')}">
+                <li class="nav-item" th:if="${user !=null and user.getRoles().contains('ROLE_MEMBER')}">
                     <a class="nav-link" href="/admin">Csanád részleg</a>
+                </li>
+                <li class="nav-item" th:if="${user !=null and user.getRoles().contains('ROLE_USER')}">
+                    <a class="nav-link" href="/profile">Kikölcsönzött cuccaim</a>
+                </li>
+                <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
+                    <a class="nav-link" href="/loan/new">Cucc kiadása</a>
                 </li>
                 <li class="nav-item" th:if="${user} == null">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item" th:unless="${user} == null">
-                    <a class="nav-link" href="/logout" th:text="${'Log out from '+user.getEmail()}">Log out</a>
+                    <a class="nav-link" href="/logout"
+                       th:text="${'Log out from '+user.getFirstName() + ' ' +user.getLastName()}">Log out</a>
                 </li>
             </ul>
         </div>

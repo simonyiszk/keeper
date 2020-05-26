@@ -31,7 +31,18 @@ public class UserService implements IUserService {
 
     public void makeMember(@NotNull UserEntity userEntity){
         userEntity.getRoles().add("ROLE_MEMBER");
-        repository.save(userEntity);
+        userEntity.setKiadhat(true);
+        //repository.save(userEntity);
+    }
+
+    public void unMakeMember(@NotNull UserEntity userEntity){
+        userEntity.getRoles().remove("ROLE_MEMBER");
+        userEntity.setKiadhat(false);
+        //repository.save(userEntity);
+    }
+
+    public void deleteUser(UserEntity userEntity){
+        repository.delete(userEntity);
     }
 
     public UserEntity registerNewUserAccount(@NotNull UserRegDto userRegDto) throws UserAlreadyExistException {

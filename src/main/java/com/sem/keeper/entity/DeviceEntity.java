@@ -1,5 +1,7 @@
 package com.sem.keeper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sem.keeper.model.DeviceRegDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import java.util.Collection;
 public class DeviceEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -28,6 +30,12 @@ public class DeviceEntity implements Serializable {
         this.description = description;
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "deviceEntity",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Collection<LoanEntity> loanEntities;
+
     @Override
     public String toString() {
         return "Device{" +
@@ -37,10 +45,19 @@ public class DeviceEntity implements Serializable {
                 '}';
     }
 
-    @OneToMany(mappedBy = "deviceEntity",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Collection<LoanEntity> loanEntities;
+    public DeviceEntity(DeviceRegDto deviceRegDto){
+        this.name=deviceRegDto.getName();
+        this.description=deviceRegDto.getDescription();
+        this.rfid=deviceRegDto.getRfid();
+        this.barcode=deviceRegDto.getBarcode();
+    }
+
+    public void copyFromRegDto(DeviceRegDto deviceRegDto){
+        this.name=deviceRegDto.getName();
+        this.description=deviceRegDto.getDescription();
+        this.rfid=deviceRegDto.getRfid();
+        this.barcode=deviceRegDto.getBarcode();
+    }
 
 }
 

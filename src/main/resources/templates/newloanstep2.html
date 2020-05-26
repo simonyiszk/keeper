@@ -4,39 +4,36 @@
 <head th:replace="wireframe::head">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>alma</title>
+    <title>Eszközök</title>
 </head>
 <body>
 
 <div th:replace="wireframe :: header"></div>
 
+
 <div class="container">
+    <h1 th:text="${device.getName()+' kiadása'}">Lyukrepesztő análfúró kiadása</h1>
+
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
             <th scope="col">ID</th>
             <th scope="col">Email</th>
+            <th scope="col">Neve</th>
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${users}" th:classappend="${element.isKiadhat()} ? table-success ">
             <th scope="row" th:text="${element.getId()}">1</th>
-            <td th:text="${element.getEmail()}">Mark</td>
+            <td th:text="${element.getEmail()}">alma@alma.com</td>
+            <td th:text="${element.getFirstName()+' '+element.getLastName()}">Lakatos Dezső</td>
             <td>
-                <a th:href="@{makemember(useremail=${element.getEmail()})}" th:if="${!element.isKiadhat()}">
-                    <button type="button" class="btn btn-success">Taggá kijelölés</button>
-                </a>
-                <a th:href="@{unmakemember(useremail=${element.getEmail()})}" th:if="${element.isKiadhat()}" th:attrappend="disabled=${user.getEmail().equals(element.getEmail())}?true:false">
-                    <button type="button" class="btn btn-warning">Nem tag</button>
-                </a>
-                <a th:href="@{deleteuser(useremail=${element.getEmail()})}">
-                    <button type="button" class="btn btn-danger">Törlés</button>
+                <a th:href="${'/loan/new/'+device.getId()+'/'+element.getId()}">
+                    <button type="button" class="btn btn-success">Neki</button>
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
-
-    <a th:href="@{/admin/users/new}" class="btn btn-block btn-primary">Új enber</a>
 </div>
 </body>
 </html>

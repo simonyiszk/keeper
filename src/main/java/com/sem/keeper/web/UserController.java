@@ -27,15 +27,6 @@ public class UserController {
     @Autowired
     private UserService users;
 
-    @GetMapping("/makemember")
-    public String makeMember(@RequestParam String useremail){
-        UserEntity user = users.findByEmail(useremail);
-        if(user != null){
-            user.getRoles().add("ROLE_MEMBER");
-        }
-        return "index";
-    }
-
     @GetMapping("/registration")
     public String showRegistrationForm(WebRequest request, Model model) {
         UserRegDto userRegDto = new UserRegDto();
@@ -47,9 +38,6 @@ public class UserController {
     public RedirectView registerUserAccount(
             @ModelAttribute("user") @Valid UserRegDto userRegDto,
             HttpServletRequest request, Errors errors) {
-
-        log.info("LoginController.registerUserAcc...1");
-
         try {
             users.registerNewUserAccount(userRegDto);
         } catch (UserAlreadyExistException uaeEx) {
