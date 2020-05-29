@@ -17,6 +17,10 @@ public class LoanService {
     @Autowired
     LoanRepository loanRepository;
 
+    public LoanEntity newLoan(LoanEntity loanEntity){
+        return loanRepository.save(loanEntity);
+    }
+
     public LoanEntity newLoan(DeviceEntity deviceEntity, UserEntity kiad, UserEntity kivesz){
         LoanEntity toAdd = new LoanEntity();
         toAdd.setDeviceEntity(deviceEntity);

@@ -29,3 +29,24 @@ async function loaddevicesroot(page, pagesize) {
     semlast=res.last;
     semfirst=res.first;
 }
+
+async function searchdevices() {
+    let searchbox=document.getElementById("alma")
+    let resp = await fetch(window.location.origin+"/ajax/devicesearch?term="+alma.value);
+    let res = JSON.parse(await resp.text());
+    let resdiv = document.getElementById("results");
+    resdiv.innerHTML="";
+    for (device of res){
+
+        let neu = document.createElement("a")
+        neu.href="/loan/new/"+device.id;
+        neu.innerText=device.name+" - "+device.description;
+        neu.classList="list-group-item list-group-item-action"
+        resdiv.appendChild(neu);
+    }
+}
+
+function pront(){
+    let alma=document.getElementById("alma")
+    console.log(alma.value)
+}

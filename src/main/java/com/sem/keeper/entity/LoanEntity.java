@@ -71,4 +71,12 @@ public class LoanEntity implements Serializable {
         return LocalDateTime.now().isAfter(backDatePlanned);
     }
 
+    public LoanEntity(LoanRequestEntity loanRequestEntity, UserEntity kiad){
+        elvitte=loanRequestEntity.getElvinne();
+        deviceEntity=loanRequestEntity.getDeviceEntity();
+        kiadta=kiad;
+        takeDate=LocalDateTime.now();
+        backDatePlanned=takeDate.plusDays(7);
+    }
+
 }

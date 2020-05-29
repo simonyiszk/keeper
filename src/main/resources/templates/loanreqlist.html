@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wireframe::head">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>alma</title>
+</head>
+<body>
+
+<div th:replace="wireframe :: header"></div>
+
+<div class="container">
+    <table class="table table-hover table-bordered table-striped">
+        <thead> <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Eszköz</th>
+            <th scope="col">Tarháló</th>
+            <th scope="col">Dógok</th>
+        </tr> </thead>
+        <tbody id="tablebody">
+        <tr th:each="element: ${requests}">
+            <th scope="row" th:text="${element.getId()}">1</th>
+            <td th:text="${element.getDeviceEntity().getName()}">Mark</td>
+            <td th:text="${element.getElvinne().getFullName()}">Mark</td>
+            <td>
+                <a th:href="${'/loanrequest/accept/'+element.getId()}">
+                    <button type="button" class="btn btn-success">OK</button>
+                </a>
+                <a th:href="${'/loanrequest/deny/'+element.getId()}">
+                    <button type="button" class="btn btn-danger">Nein</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

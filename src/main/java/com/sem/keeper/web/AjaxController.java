@@ -5,6 +5,7 @@ import com.sem.keeper.repo.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,8 @@ public class AjaxController {
 
     @GetMapping("/devicesearch")
     public List<DeviceEntity> searchDevice(@RequestParam String term){
-        return devices.findByNameContainingIgnoreCase(term);
+        Pageable pageable = PageRequest.of(0, 10);
+        return devices.findByNameContainingIgnoreCase(term, pageable);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.sem.keeper.repo;
 
 import com.sem.keeper.entity.DeviceEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,5 @@ public interface DeviceRepository extends PagingAndSortingRepository<DeviceEntit
 
     DeviceEntity findById(long id);
 
-    List<DeviceEntity> findByNameContainingIgnoreCase(String name);
+    List<DeviceEntity> findByNameContainingIgnoreCase(String name, Pageable page);
 }

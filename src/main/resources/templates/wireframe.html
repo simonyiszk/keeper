@@ -24,16 +24,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item nav-link">
-                    Rangod:
-                </li>
-                <li th:each="role : ${user?.getRoles()}" class="nav-item nav-link" th:text="${role}">
 
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
+                    <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
                 <li class="nav-item" th:if="${user !=null and user.getRoles().contains('ROLE_MEMBER')}">
                     <a class="nav-link" href="/admin">Csanád részleg</a>
@@ -46,6 +39,9 @@
                 </li>
                 <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
                     <a class="nav-link" href="/loan/list">Kint lévő cuccok</a>
+                </li>
+                <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
+                    <a class="nav-link" href="/loanrequest">Requestek</a>
                 </li>
                 <li class="nav-item" th:if="${user} == null">
                     <a class="nav-link" href="/login">Login</a>

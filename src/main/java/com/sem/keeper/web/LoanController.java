@@ -14,12 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/loan")
@@ -47,6 +48,17 @@ public class LoanController {
         model.addAttribute("loans", loans);
         model.addAttribute("user", user);
         return "loanlist";
+    }
+
+    @GetMapping("/list/all")
+    public String listAll(HttpSession session, Model model){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        List<LoanEntity> loans  = StreamSupport.stream(loanRepository.findAll().spliterator(),false)
+                .collect(Collectors.toList());
+
+        model.addAttribute("loans", loans);
+        model.addAttribute("user", user);
+        return "loanlistall";
     }
 
     @GetMapping("/return/{loanid}")

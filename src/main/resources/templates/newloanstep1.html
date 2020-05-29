@@ -6,12 +6,17 @@
     <meta charset="UTF-8">
     <title>Eszközök</title>
 </head>
-<body>
+<body onload="searchdevices()">
 
 <div th:replace="wireframe :: header"></div>
 
 <div class="container">
-    <table class="table table-hover table-bordered table-striped">
+    <input type="search" id="alma" onkeyup="searchdevices()">
+    <div class="list-group" id="results">
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+    </div>
+    <table class="table table-hover table-bordered table-striped" hidden>
         <thead>
         <tr>
             <th scope="col">ID</th>
@@ -33,8 +38,6 @@
         </tr>
         </tbody>
     </table>
-    <br/>
-    <a href="new" class="btn btn-block btn-primary">Új eszköz hozzáadása</a>
 </div>
 </body>
 </html>
