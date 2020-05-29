@@ -31,13 +31,13 @@ public class UserController {
     @GetMapping("/registration")
     public String showRegistrationForm(WebRequest request, Model model) {
         UserRegDto userRegDto = new UserRegDto();
-        model.addAttribute("user", userRegDto);
+        model.addAttribute("userreg", userRegDto);
         return "registration";
     }
 
     @PostMapping("/registration")
     public RedirectView registerUserAccount(
-            @ModelAttribute("user") @Valid UserRegDto userRegDto,
+            @ModelAttribute("userreg") @Valid UserRegDto userRegDto,
             HttpServletRequest request, Errors errors, RedirectAttributes redirectAttributes) {
         try {
             users.registerNewUserAccount(userRegDto);
