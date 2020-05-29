@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -36,17 +37,21 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public RedirectView registerUserAccount(
+    public String registerUserAccount(
             @ModelAttribute("userreg") @Valid UserRegDto userRegDto,
-            HttpServletRequest request, Errors errors, RedirectAttributes redirectAttributes) {
+            BindingResult bindingResult,
+        RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "registration";
+        }
         try {
             users.registerNewUserAccount(userRegDto);
         } catch (UserAlreadyExistException uaeEx) {
 
             redirectAttributes.addFlashAttribute("message", "An account for that email already exists.");
-            return new RedirectView("/");
+            return "redirect:/";
         }
 
-        return new RedirectView("/");
+        return "redirect:/";
     }
 }

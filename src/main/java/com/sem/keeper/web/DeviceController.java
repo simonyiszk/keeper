@@ -8,6 +8,7 @@ import com.sem.keeper.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -46,12 +47,16 @@ public class DeviceController {
     }
 
     @PostMapping("/edit/{deviceid}")
-    public RedirectView edit(@ModelAttribute("newdevice") @Valid DeviceRegDto deviceRegDto,
+    public String edit(@ModelAttribute("newdevice") @Valid DeviceRegDto deviceRegDto,
+                             BindingResult bindingResult,
                              @PathVariable("deviceid") String deviceid){
+        if (bindingResult.hasErrors()){
+            return "newdevice";
+        }
         DeviceEntity deviceEntity=deviceRepository.findById(Long.parseLong(deviceid));
         deviceEntity.copyFromRegDto(deviceRegDto);
         deviceRepository.save(deviceEntity);
-        return new RedirectView("/device/list");
+        return "redirect:/device/list";
     }
 
     @GetMapping("/list")

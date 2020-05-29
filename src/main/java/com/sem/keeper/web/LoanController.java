@@ -44,7 +44,7 @@ public class LoanController {
     @GetMapping("/list")
     public String list(HttpSession session, Model model){
         UserEntity user = (UserEntity) session.getAttribute("user");
-        List loans = loanRepository.findByVisszavetteIsNullOrderByTakeDate();
+        List<LoanEntity> loans = loanRepository.findByVisszavetteIsNullOrderByTakeDate();
         model.addAttribute("loans", loans);
         model.addAttribute("user", user);
         return "loanlist";
