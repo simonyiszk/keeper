@@ -1,26 +1,19 @@
 package com.sem.keeper.web;
 
-import com.sem.keeper.entity.DeviceEntity;
 import com.sem.keeper.entity.UserEntity;
-import com.sem.keeper.repo.DeviceRepository;
-import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.UserRepository;
 import com.sem.keeper.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,14 +23,14 @@ public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
-    UserRepository users;
+    UserRepository userRepository;
 
     @Autowired
     UserService userService;
 
     @GetMapping("/makemember")
     public RedirectView makeMember(@RequestParam String useremail){
-        UserEntity user = userService.findByEmail(useremail);
+        UserEntity user = userRepository.findByEmail(useremail);
         if(user != null){
             userService.makeMember(user);
         }
@@ -46,7 +39,7 @@ public class AdminController {
 
     @GetMapping("/unmakemember")
     public RedirectView unMakeMember(@RequestParam String useremail){
-        UserEntity user = userService.findByEmail(useremail);
+        UserEntity user = userRepository.findByEmail(useremail);
         if(user != null){
             userService.unMakeMember(user);
         }
@@ -55,7 +48,7 @@ public class AdminController {
 
     @GetMapping("/deleteuser")
     public RedirectView deleteuser(@RequestParam String useremail){
-        UserEntity user = userService.findByEmail(useremail);
+        UserEntity user = userRepository.findByEmail(useremail);
         if(user != null){
             userService.deleteUser(user);
         }
@@ -66,7 +59,7 @@ public class AdminController {
     public String listUsers(HttpSession session, Model model) {
         UserEntity user = (UserEntity) session.getAttribute("user");
         model.addAttribute("user",user);
-        model.addAttribute("users", users.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return "userlist";
     }
 

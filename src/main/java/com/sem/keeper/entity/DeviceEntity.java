@@ -11,6 +11,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
+/**
+ * A kikölcsönözhető eszközöket reprezentáló entitás
+ */
 @Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,12 +23,24 @@ public class DeviceEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Eszköz rövid neve
+     */
     private String name;
 
+    /**
+     * Eszköz hosszabb leírása
+     */
     private String description;
 
+    /**
+     * Könnyen leolvasható vonalkód, későbbi használatra
+     */
     private String barcode;
 
+    /**
+     * USB-s olvasóval beolvasható azonosító, későbbi használatra
+     */
     private String rfid;
 
     public DeviceEntity(String name, String description){
@@ -33,6 +48,10 @@ public class DeviceEntity implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Azok a kölcsönzések, amikben ezt vették ki.
+     * Belső használatra
+     */
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -50,6 +69,10 @@ public class DeviceEntity implements Serializable {
                 '}';
     }
 
+    /**
+     * Új eszköz DTO-jából generálás
+     * @param deviceRegDto A másolandó DTO
+     */
     public DeviceEntity(DeviceRegDto deviceRegDto){
         this.name=deviceRegDto.getName();
         this.description=deviceRegDto.getDescription();
@@ -57,6 +80,10 @@ public class DeviceEntity implements Serializable {
         this.barcode=deviceRegDto.getBarcode();
     }
 
+    /**
+     * Új eszköz DTO-jából másolás, editáláshoz szükséges
+     * @param deviceRegDto A másolandó DTO
+     */
     public void copyFromRegDto(DeviceRegDto deviceRegDto){
         this.name=deviceRegDto.getName();
         this.description=deviceRegDto.getDescription();

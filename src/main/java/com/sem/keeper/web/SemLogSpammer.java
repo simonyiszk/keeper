@@ -16,8 +16,8 @@ public class SemLogSpammer {
         log.info("Test users:");
         log.info("gazsi69@gmail.com:aluminium");
         log.info("airplaneboy@gmail.com:mekk");
-        log.info("Test users:");
-        log.info("Test users:");
-        log.info("Test users:");
+        log.info("a@a:a");
+        //log.info("Test users:");
+        //log.info("Test users:");
     }
 }

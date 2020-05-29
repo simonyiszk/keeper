@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 @Service
 @Transactional
-public class UserService implements IUserService {
+public class UserService {
     @Autowired
     private UserRepository repository;
 
@@ -25,17 +25,13 @@ public class UserService implements IUserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    public UserEntity getFromPrincipal(@NotNull Principal p){
-        return repository.findByEmail(p.getName());
-    }
-
-    public void makeMember(@NotNull UserEntity userEntity){
+    public void makeMember(UserEntity userEntity){
         userEntity.getRoles().add("ROLE_MEMBER");
         userEntity.setKiadhat(true);
         //repository.save(userEntity);
     }
 
-    public void unMakeMember(@NotNull UserEntity userEntity){
+    public void unMakeMember(UserEntity userEntity){
         userEntity.getRoles().remove("ROLE_MEMBER");
         userEntity.setKiadhat(false);
         //repository.save(userEntity);
@@ -45,7 +41,7 @@ public class UserService implements IUserService {
         repository.delete(userEntity);
     }
 
-    public UserEntity registerNewUserAccount(@NotNull UserRegDto userRegDto) throws UserAlreadyExistException {
+    public UserEntity registerNewUserAccount(UserRegDto userRegDto) throws UserAlreadyExistException {
 
         if (emailExist(userRegDto.getEmail())) {
             throw new UserAlreadyExistException(
@@ -69,9 +65,5 @@ public class UserService implements IUserService {
 
     private boolean emailExist(String email) {
         return repository.findByEmail(email) != null;
-    }
-
-    public UserEntity findByEmail(String email){
-        return repository.findByEmail(email);
     }
 }

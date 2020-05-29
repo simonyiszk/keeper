@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+/**
+ * Egy eszköz igénylését reprezentáló entitás. Arra jó, hogy azon userek akik nem adhatnak ki eszközt,
+ * fel tudnak adni egy kérelmet, és ezt a tagok egy gombnyomással jóváhagyhatják. Egyes szituációkban így kényelmesebb
+ */
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)

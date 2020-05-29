@@ -14,7 +14,7 @@ public interface LoanRepository extends PagingAndSortingRepository<LoanEntity, L
 
     List<LoanEntity> findByElvitte(UserEntity elvitte);
 
-    List<LoanEntity> findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(DeviceEntity deviceEntity);
+    //List<LoanEntity> findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(DeviceEntity deviceEntity);
 
     List<LoanEntity> findByVisszavetteIsNullOrderByTakeDate();
 }

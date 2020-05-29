@@ -17,11 +17,11 @@ public class LoanService {
     @Autowired
     LoanRepository loanRepository;
 
-    public LoanEntity newLoan(DeviceEntity deviceEntity, UserEntity chad, UserEntity virgin){
+    public LoanEntity newLoan(DeviceEntity deviceEntity, UserEntity kiad, UserEntity kivesz){
         LoanEntity toAdd = new LoanEntity();
         toAdd.setDeviceEntity(deviceEntity);
-        toAdd.setKiadta(chad);
-        toAdd.setElvitte(virgin);
+        toAdd.setKiadta(kiad);
+        toAdd.setElvitte(kivesz);
         toAdd.setTakeDate(LocalDateTime.now());
         toAdd.setBackDatePlanned(LocalDateTime.now().plusDays(7));
         return loanRepository.save(toAdd);
@@ -31,8 +31,8 @@ public class LoanService {
         loanEntity.setBackDatePlanned(LocalDateTime.now().plusDays(7));
     }
 
-    public void visszahoz(LoanEntity loanEntity, UserEntity chad) {
+    public void visszahoz(LoanEntity loanEntity, UserEntity backUser) {
         loanEntity.setBackDateReal(LocalDateTime.now());
-        loanEntity.setVisszavette(chad);
+        loanEntity.setVisszavette(backUser);
     }
 }

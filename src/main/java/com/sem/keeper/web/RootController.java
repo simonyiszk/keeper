@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -32,18 +33,10 @@ public class RootController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
-    @ResponseBody
-    public String currentUserName(Principal principal) {
-        //SecurityContextHolder.getContext().getAuthentication().
-        return principal.getName();
-    }
-
     @GetMapping("/")
-    public String root(Principal principal, Map<String, Object> model){
-        UserEntity user = null;
-        if (principal != null) {
-            user = userService.getFromPrincipal(principal);
+    public String root(HttpSession session, Map<String, Object> model){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        if (user != null) {
             Iterable<DeviceEntity> devicelist = devices.findAll(PageRequest.of(0, 10));
             model.put("devices", devicelist);
         }

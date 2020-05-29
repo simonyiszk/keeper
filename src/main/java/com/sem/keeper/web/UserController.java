@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,12 +38,12 @@ public class UserController {
     @PostMapping("/registration")
     public RedirectView registerUserAccount(
             @ModelAttribute("user") @Valid UserRegDto userRegDto,
-            HttpServletRequest request, Errors errors) {
+            HttpServletRequest request, Errors errors, RedirectAttributes redirectAttributes) {
         try {
             users.registerNewUserAccount(userRegDto);
         } catch (UserAlreadyExistException uaeEx) {
-            ModelAndView mav = new ModelAndView("usererror");
-            mav.addObject("message", "An account for that username/email already exists.");
+
+            redirectAttributes.addFlashAttribute("message", "An account for that email already exists.");
             return new RedirectView("/");
         }
 

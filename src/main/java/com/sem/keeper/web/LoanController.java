@@ -82,7 +82,7 @@ public class LoanController {
         model.addAttribute("device", device);
         model.addAttribute("user", user);
         model.addAttribute("users",userRepository.findAll());
-        List<LoanEntity> loans = loanRepository.findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(device);
+        //List<LoanEntity> loans = loanRepository.findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(device);
         return "newloanstep2";
     }
 

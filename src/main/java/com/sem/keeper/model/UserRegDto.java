@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Felhasználó hozzáadására használt DTO
+ */
 @Data
 public class UserRegDto {
 
@@ -19,7 +22,6 @@ public class UserRegDto {
     @NotNull
     @NotEmpty
     private String password;
-    private String matchingPassword;
 
     @NotNull
     @NotEmpty

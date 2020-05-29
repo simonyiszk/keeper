@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Eszköz entitások elérésére használó repository
+ */
 @Repository
 public interface DeviceRepository extends PagingAndSortingRepository<DeviceEntity, Long> {
-    List<DeviceEntity> findByName(String name);
-
-    List<DeviceEntity> findByDescription(String description);
 
     DeviceEntity findById(long id);
 

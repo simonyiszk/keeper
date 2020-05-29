@@ -2,7 +2,6 @@ package com.sem.keeper;
 
 import com.sem.keeper.service.SemAuthSuccessHandler;
 import com.sem.keeper.service.SemUserDetailsService;
-import com.sem.keeper.service.SemAuthProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private SemAuthProvider authenticationProvider;
+    //@Autowired
+    //private SemAuthProvider authenticationProvider;
 
     private static final Logger log = LoggerFactory.getLogger(SecSecurityConfig.class);
 
@@ -33,8 +32,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("authprov");
-        log.error(authenticationProvider.getClass().toString());
         auth.userDetailsService(userDetailsService);
     }
 
@@ -58,7 +55,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("detserv");
         auth.userDetailsService(userDetailsService);
     }
 
