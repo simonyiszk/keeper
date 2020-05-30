@@ -30,6 +30,7 @@ async function loaddevicesroot(page, pagesize) {
     semfirst=res.first;
 }
 
+//TODO knockout
 async function searchdevices() {
     let searchbox=document.getElementById("alma")
     let resp = await fetch(window.location.origin+"/ajax/devicesearch?term="+alma.value);
