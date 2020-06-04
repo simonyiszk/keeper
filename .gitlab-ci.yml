@@ -1,6 +1,6 @@
 stages:
   - buildjava
-  - builddcoker
+  - builddocker
 
 builddocker:
   stage: builddocker
