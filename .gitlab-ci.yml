@@ -15,7 +15,7 @@ build java:
   stage: build java
   image: gradle:6.5-jdk11
   script:
-    - gradle bootJar
+    - gradle bootJar -Dorg.gradle.daemon=false
   artifacts:
     paths:
       - build/libs/*.jar
