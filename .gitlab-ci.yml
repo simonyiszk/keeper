@@ -3,7 +3,7 @@ stages:
   - build docker
 
 build docker:
-  stage: builddocker
+  stage: build docker
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
@@ -12,7 +12,7 @@ build docker:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 build java:
-  stage: buildjava
+  stage: build java
   image: gradle:6.5-jdk11
   script:
     - gradle bootJar
