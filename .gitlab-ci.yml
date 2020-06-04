@@ -7,6 +7,8 @@ build docker:
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
+  only:
+    - master
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - cat /kaniko/.docker/config.json
@@ -21,4 +23,6 @@ build java:
     paths:
       - build/libs/*.jar
     expire_in: 2 hours
+  only:
+    - master
 
