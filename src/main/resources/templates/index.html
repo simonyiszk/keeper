@@ -18,7 +18,7 @@
 <div class="container" th:if="${user} == null">
     Helló diló! Jelentkezz be léccike<br>
     <a href="/login" ><button type="button" class="btn btn-primary">Na jó</button></a>
-    <a href="/user/registration" ><button type="button" class="btn btn-primary">Megy a gőzös, megy a gőzös regisztrálva</button></a>
+    <a href="/user/registration" ><button type="button" class="btn btn-primary">Regelési</button></a>
 </div>
 <div class="container" th:if="${user} != null and ${user?.getRoles()?.contains('ROLE_USER')}">
     <table class="table table-hover table-bordered table-striped">
