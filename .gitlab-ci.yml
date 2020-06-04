@@ -13,9 +13,9 @@ builddocker:
 
 buildjava:
   stage: buildjava
-  image: adoptopenjdk:11-jdk-hotspot
+  image: gradle:6.5-jdk11
   script:
-    - ./gradlew bootJar
+    - gradle bootJar
   artifacts:
     paths:
       - build/libs/*.jar
