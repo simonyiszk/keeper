@@ -78,15 +78,6 @@ public class LoanController {
         return new RedirectView("/loan/list");
     }
 
-    @GetMapping("/new")
-    public String newloanStepOne(HttpSession session, Model model){
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        Iterable<DeviceEntity> devicelist = deviceRepository.findAll();
-        model.addAttribute("devices", devicelist);
-        model.addAttribute("user", user);
-        return "newloanstep1";
-    }
-
     @GetMapping("/new/{deviceid}")
     public String newloanStepTwo(HttpSession session, Model model, @PathVariable("deviceid") String deviceid){
         UserEntity user = (UserEntity) session.getAttribute("user");

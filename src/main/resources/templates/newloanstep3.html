@@ -12,16 +12,23 @@
 
 
 <div class="container">
-    <h1 th:text="${device.getName()+' kiadása'}">Lyukrepesztő análfúró kiadása</h1>
 
-    <h2 th:text="${tarhauser.getFirstName()+' '+tarhauser.getLastName()+' felhasználónak'}">Lakatos Pistikének</h2>
+    <div class="jumbotron">
+        <h1 class="display-4" th:text="${device.getName()+' kiadása'}">Eszköz kiadása</h1>
+        <p class="lead" th:text="${tarhauser.getFirstName()+' '+tarhauser.getLastName()+' felhasználónak'}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p >Hát ide még lehet írni valamit, de nem látom értelmét, ez sztem elég egyértelmű.</p>
+        <p class="lead">
+            <a th:href="@{__${#httpServletRequest.requestURI}__/ok}">
+                <button type="button" class="btn btn-success btn-lg"><i class="fas fa-check"></i></button>
+            </a>
+            <a th:href="@{/}">
+                <button type="button" class="btn btn-danger btn-lg"><i class="fas fa-times"></i></button>
+            </a>
+        </p>
+    </div>
 
-    <a th:href="@{__${#httpServletRequest.requestURI}__/ok}">
-        <button type="button" class="btn btn-success">Zsa</button>
-    </a>
-    <a th:href="@{/}">
-        <button type="button" class="btn btn-danger">NEIN</button>
-    </a>
+
 </div>
 </body>
 </html>

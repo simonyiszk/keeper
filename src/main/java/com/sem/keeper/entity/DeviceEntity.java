@@ -91,5 +91,9 @@ public class DeviceEntity implements Serializable {
         this.barcode=deviceRegDto.getBarcode();
     }
 
+    public boolean isAlma(){
+        return true;
+    }
+
 }
 

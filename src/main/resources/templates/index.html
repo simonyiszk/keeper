@@ -21,13 +21,18 @@
     <a href="/user/registration" ><button type="button" class="btn btn-primary">Regelési</button></a>
 </div>
 <div class="container" th:if="${user} != null and ${user?.getRoles()?.contains('ROLE_USER')}">
+    <div class="form-group">
+        <label for="searchTerm">Szörcs</label>
+        <input type="email" class="form-control" id="searchTerm"
+               placeholder="Krumplipucoló" onkeyup="loaddevicesroot(semcurrentpage,'10')">
+    </div>
     <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
-            <th scope="col">ID</th>
             <th scope="col">Név</th>
             <th scope="col">Leírás</th>
-            <th scope="col">Kéne</th>
+            <th scope="col">Kölcsönzés</th>
+            <th scope="col" th:if="${user !=null and user.isKiadhat()}">Kezelés</th>
         </tr>
         </thead>
         <tbody id="tablebody">
@@ -35,11 +40,17 @@
         </tbody>
     </table>
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" onclick="if (!semfirst) loaddevicesroot(--semcurrentpage, '10')">Previous</a></li>
-            <li class="page-item"><a class="page-link" onclick="if (!semlast) loaddevicesroot(++semcurrentpage, '10')">Next</a></li>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" id="prevbutton"><a class="page-link" onclick="if (!semfirst) loaddevicesroot(--semcurrentpage, '10')">Previous</a></li>
+            <li class="page-item" id="nextbutton"><a class="page-link" onclick="if (!semlast) loaddevicesroot(++semcurrentpage, '10')">Next</a></li>
         </ul>
     </nav>
+
+    <br/>
+    <a href="/device/new" class="btn btn-block btn-primary">Új eszköz hozzáadása</a>
+
+    <span th:text="${'Verzió:'+@environment.getProperty('git.commit.id.abbrev')+': '+@environment.getProperty('git.commit.message.short')}"></span>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

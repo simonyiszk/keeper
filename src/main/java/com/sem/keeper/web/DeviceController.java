@@ -59,13 +59,6 @@ public class DeviceController {
         return "redirect:/device/list";
     }
 
-    @GetMapping("/list")
-    public String listdevices(Model model, HttpSession session){
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
-        model.addAttribute("devices", deviceRepository.findAll());
-        return "devicemgmt";
-    }
 
     @GetMapping("/new")
     public String showRegistrationForm(WebRequest request, Model model) {

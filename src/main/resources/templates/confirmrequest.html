@@ -21,10 +21,10 @@
     <h1 th:text="${device.getName()+' rekvesztálása'}">Lyukrepesztő análfúró kunyizása</h1>
 
     <a th:href="@{__${#httpServletRequest.requestURI}__/ok}">
-        <button type="button" class="btn btn-success">Zsa</button>
+        <button type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
     </a>
     <a th:href="@{/}">
-        <button type="button" class="btn btn-danger">NEIN</button>
+        <button type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
     </a>
 </div>
 </body>

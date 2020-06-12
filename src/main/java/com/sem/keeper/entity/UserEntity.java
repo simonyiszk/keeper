@@ -1,10 +1,14 @@
 package com.sem.keeper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -77,9 +81,12 @@ public class UserEntity implements Serializable {
     }
 
     /*
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "elvitte",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Collection<LoanEntity> loanEntities;
-     */
+*/
 }

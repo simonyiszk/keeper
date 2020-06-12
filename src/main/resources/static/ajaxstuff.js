@@ -2,8 +2,27 @@ var semcurrentpage = 0
 var semlast = false
 var semfirst = true
 
+function makeButton(button){
+    let theA=document.createElement("a")
+    theA.style.cssText="margin:auto;"
+    let theButton = document.createElement("button")
+    theButton.classList="btn "+button.class
+    if(button.text) {
+        theButton.innerText = button.text
+    } else {
+        let i = document.createElement("i")
+        i.classList.add("fas")
+        i.classList.add(button.i)
+        theButton.appendChild(i)
+    }
+    theA.appendChild(theButton)
+    theA.href=button.link
+    button.parent.appendChild(theA)
+}
+
 async function loaddevicesroot(page, pagesize) {
-    let resp = await fetch(window.location.origin+"/ajax/devices?page="+page+"&pageSize="+parseInt(pagesize,10));
+    let searchbox=document.getElementById("searchTerm")
+    let resp = await fetch(`${window.location.origin}/ajax/devicesearch/${page}?term=${searchbox.value}`);
     let res = JSON.parse(await resp.text());
     let table = document.getElementById("tablebody");
     table.innerHTML="";
@@ -11,23 +30,50 @@ async function loaddevicesroot(page, pagesize) {
         let neu = document.createElement("tr")
         neu.appendChild(document.createElement("th"))
         neu.appendChild(document.createElement("td"))
-        neu.appendChild(document.createElement("td"))
-        neu.appendChild(document.createElement("td"))
-        neu.children[0].innerText=device.id;
-        neu.children[1].innerText=device.name;
-        neu.children[2].innerText=device.description;
+        let kolcsGomb = document.createElement("td")
+        kolcsGomb.appendChild(document.createElement("div"))
+        kolcsGomb.children[0].style.cssText="display: flex;flex-direction:column"
+        neu.appendChild(kolcsGomb)
+        if (admin) {
+            let newChild = document.createElement("td")
+            newChild.appendChild(document.createElement("div"))
+            newChild.children[0].style.cssText="display: flex;flex-direction:column"
+            neu.appendChild(newChild)
+        }
+        neu.children[0].innerText=device.name;
+        neu.children[1].innerText=device.description;
 
-        let theA=document.createElement("a")
-        let theButton = document.createElement("button")
-        theButton.classList="btn btn-primary"
-        theButton.innerText="Rekvesztálás"
-        theA.appendChild(theButton)
-        theA.href="loan/request/"+device.id
-        neu.children[3].appendChild(theA)
+        let buttons=[]
+
+        if (admin){
+            buttons=[
+                {text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0]},
+                {text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0]},
+                {i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0]},
+                {i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0]}
+            ]
+        } else {
+            buttons=[
+                    {text:"Rekvesztálás",link:`loan/request/${device.id}`, class: "btn-primary", parent:neu.children[2]}
+                    ]
+        }
+        buttons.forEach(makeButton)
         table.appendChild(neu);
     }
     semlast=res.last;
     semfirst=res.first;
+    let pagiButtons=[
+        {id:"prevbutton", bindbool:semfirst},
+        {id:"nextbutton", bindbool:semlast}
+    ]
+    pagiButtons.forEach(btn=>{
+        let element=document.getElementById(btn.id)
+        if(btn.bindbool){
+            element.classList.remove("active")
+        } else {
+            element.classList.add("active")
+        }
+    })
 }
 
 //TODO knockout

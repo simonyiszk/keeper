@@ -13,22 +13,20 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">ID</th>
             <th scope="col">Eszköz</th>
             <th scope="col">Tarháló</th>
             <th scope="col">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${requests}">
-            <th scope="row" th:text="${element.getId()}">1</th>
-            <td th:text="${element.getDeviceEntity().getName()}">Mark</td>
+            <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
             <td th:text="${element.getElvinne().getFullName()}">Mark</td>
             <td>
                 <a th:href="${'/loanrequest/accept/'+element.getId()}">
-                    <button type="button" class="btn btn-success">OK</button>
+                    <button type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
                 </a>
                 <a th:href="${'/loanrequest/deny/'+element.getId()}">
-                    <button type="button" class="btn btn-danger">Nein</button>
+                    <button type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
                 </a>
             </td>
         </tr>
