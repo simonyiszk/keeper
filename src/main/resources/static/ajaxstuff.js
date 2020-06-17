@@ -1,6 +1,13 @@
 var semcurrentpage = 0
 var semlast = false
 var semfirst = true
+var reqdItems = null
+async function getReqdItems() {
+    let resp = await fetch(`${window.location.origin}/user/myRequestIds`)
+    reqdItems = JSON.parse(await resp.text());
+}
+
+// Kézműves form binding. Majd írok angulart is, most ez van. Amúgy ha akarsz segíteni, várlak szeretettel
 
 function makeButton(button){
     let theA=document.createElement("a")
@@ -15,12 +22,19 @@ function makeButton(button){
         i.classList.add(button.i)
         theButton.appendChild(i)
     }
+    if (reqdItems.includes(button.id)){
+        theButton.disabled=true
+        theButton.classList.add("btn-secondary")
+    }
     theA.appendChild(theButton)
     theA.href=button.link
     button.parent.appendChild(theA)
 }
 
 async function loaddevicesroot(page, pagesize) {
+    if (reqdItems == null){
+        await getReqdItems()
+    }
     let searchbox=document.getElementById("searchTerm")
     let resp = await fetch(`${window.location.origin}/ajax/devicesearch/${page}?term=${searchbox.value}`);
     let res = JSON.parse(await resp.text());
@@ -47,14 +61,14 @@ async function loaddevicesroot(page, pagesize) {
 
         if (admin){
             buttons=[
-                {text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0]},
-                {text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0]},
-                {i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0]},
-                {i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0]}
+                {id: device.id, text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0]},
+                {id: device.id, text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0]},
+                {id: device.id, i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0]},
+                {id: device.id, i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0]}
             ]
         } else {
             buttons=[
-                    {text:"Rekvesztálás",link:`loan/request/${device.id}`, class: "btn-primary", parent:neu.children[2]}
+                    {id: device.id, text:"Rekvesztálás",link:`loan/request/${device.id}`, class: "btn-primary", parent:neu.children[2]}
                     ]
         }
         buttons.forEach(makeButton)

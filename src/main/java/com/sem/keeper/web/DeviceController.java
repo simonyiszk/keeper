@@ -32,7 +32,7 @@ public class DeviceController {
         DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
 
         deviceService.deleteDevice(device);
-        return new RedirectView("/device/list");
+        return new RedirectView("/");
     }
 
     @GetMapping("/edit/{deviceid}")
@@ -56,7 +56,7 @@ public class DeviceController {
         DeviceEntity deviceEntity=deviceRepository.findById(Long.parseLong(deviceid));
         deviceEntity.copyFromRegDto(deviceRegDto);
         deviceRepository.save(deviceEntity);
-        return "redirect:/device/list";
+        return "redirect:/";
     }
 
 

@@ -2,6 +2,7 @@ package com.sem.keeper.web;
 
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.UserRepository;
+import com.sem.keeper.service.GoodMusicService;
 import com.sem.keeper.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class AdminController {
 
     @Autowired
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+
+    @Autowired
+    GoodMusicService goodMusicService;
 
     @Autowired
     UserRepository userRepository;
@@ -69,6 +73,7 @@ public class AdminController {
         // HttpSession session = request.getSession();
         UserEntity user = (UserEntity) session.getAttribute("user");
         model.addAttribute("user",user);
+        model.addAttribute("musicUrl",goodMusicService.getNextGoodMusic().getUrl());
         return "admin";
     }
 

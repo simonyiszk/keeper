@@ -13,7 +13,6 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead><tr>
-            <th scope="col">ID</th>
             <th scope="col">Eszköz</th>
             <th scope="col">Leírás</th>
             <th scope="col">Elvitted</th>
@@ -21,8 +20,7 @@
         </tr></thead>
         <tbody id="tablebody">
         <tr th:classappend="${element.getBackDateReal()} ? 'table-secondary' " th:each="element: ${loans}">
-            <th scope="row" th:text="${element.getId()}">1</th>
-            <td th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</td>
+            <th th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</th>
             <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
             <td th:text="${{element.getTakeDate()}}">alma</td>
             <td th:text="${{element.getBackDatePlanned()}}">alma</td>

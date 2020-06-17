@@ -1,5 +1,9 @@
 package com.sem.keeper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sem.keeper.service.LoanService;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -24,24 +28,36 @@ public class LoanEntity implements Serializable {
     /**
      * Fehasználó, aki felelősséget vállal érte, amíg kint van
      */
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity elvitte;
 
     /**
      * Felhasználó, aki kiadta
      */
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity kiadta;
 
     /**
      * Felhasználó, aki felelősséget vállal, hogy működőképes állapotban vette visza
      */
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity visszavette;
 
     /**
      * Az eszköz amiről szó van
      */
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private DeviceEntity deviceEntity;
 
@@ -67,6 +83,7 @@ public class LoanEntity implements Serializable {
      * Megnézi, hogy az user elkésett-e
      * @return True, ha az user elkésett a visszahozatallal
      */
+    @JsonIgnore
     public boolean isLate(){
         return LocalDateTime.now().isAfter(backDatePlanned);
     }

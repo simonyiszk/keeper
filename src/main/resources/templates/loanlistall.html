@@ -13,7 +13,6 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col"> Kölcsönzés ID</th>
             <th scope="col">Eszköz</th>
             <th scope="col">Kölcsönző</th>
             <th scope="col">Kiadó</th>
@@ -24,8 +23,7 @@
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${loans}">
-            <th scope="row" th:text="${element.getId()}">1</th>
-            <td th:text="${element.getDeviceEntity().getName()}">Mark</td>
+            <th th:text="${element.getDeviceEntity().getName()}">Mark</td>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
             <td th:text="${element.getVisszavette()?.getFullName()}">Mark</td>

@@ -11,7 +11,7 @@
 
 <div th:replace="wireframe :: header"></div>
 
-
+<div th:attr="data-loanreqs=${loanreqs},data-kiadhat=${user?.isKiadhat()}"></div>
 <div class="container" th:if="${message}">
     <h1 th:text="${message}"></h1>
 </div>
@@ -47,7 +47,7 @@
     </nav>
 
     <br/>
-    <a href="/device/new" class="btn btn-block btn-primary">Új eszköz hozzáadása</a>
+    <a href="/device/new" class="btn btn-block btn-primary" th:if="${user !=null and user.isKiadhat()}">Új eszköz hozzáadása</a>
 
     <span th:text="${'Verzió:'+@environment.getProperty('git.commit.id.abbrev')+': '+@environment.getProperty('git.commit.message.short')}"></span>
 

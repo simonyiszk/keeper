@@ -1,11 +1,11 @@
 package com.sem.keeper.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Egy eszköz igénylését reprezentáló entitás. Arra jó, hogy azon userek akik nem adhatnak ki eszközt,
@@ -17,13 +17,24 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class LoanRequestEntity {
 
+    @Getter(onMethod = @__({@JsonProperty("id")}))
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Getter(onMethod = @__({
+            @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                property = "id"),
+            @JsonIdentityReference(alwaysAsId = true)
+    }))
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity elvinne;
 
+    @Getter(onMethod = @__({
+            @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                    property = "id"),
+            @JsonIdentityReference(alwaysAsId = true)
+    }))
     @ManyToOne(fetch = FetchType.LAZY)
     private DeviceEntity deviceEntity;
 

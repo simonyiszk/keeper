@@ -1,8 +1,13 @@
 package com.sem.keeper.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sem.keeper.entity.DeviceEntity;
+import com.sem.keeper.entity.LoanEntity;
+import com.sem.keeper.entity.LoanRequestEntity;
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.DeviceRepository;
+import com.sem.keeper.repo.LoanRepository;
+import com.sem.keeper.repo.LoanRequestRepository;
 import com.sem.keeper.repo.UserRepository;
 import com.sem.keeper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class RootController {
@@ -33,14 +40,26 @@ public class RootController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    LoanRepository loanRepository;
+
+    @Autowired
+    LoanRequestRepository loanRequestRepository;
+
     @GetMapping("/")
     public String root(HttpSession session, Map<String, Object> model){
         UserEntity user = (UserEntity) session.getAttribute("user");
-        if (user != null) {
-            Iterable<DeviceEntity> devicelist = devices.findAll(PageRequest.of(0, 10));
-            model.put("devices", devicelist);
-        }
+
         model.put("user", user);
+        Collection<LoanRequestEntity> loans = loanRequestRepository.findByElvinne(user);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String loansStr;
+        try {
+            loansStr = objectMapper.writeValueAsString(loans);
+        } catch (Exception e){
+            loansStr = "[]";
+        }
+        model.put("loanreqs", loansStr);
         return "index";
     }
 }
