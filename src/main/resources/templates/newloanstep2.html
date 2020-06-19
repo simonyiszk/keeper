@@ -17,15 +17,20 @@
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
             <th scope="col">Email</th>
-            <th scope="col">Neve</th>
-            <th scope="col">Note</th>
+            <th scope="col">User</th>
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${users}" th:classappend="${element.isKiadhat()} ? table-success ">
             <th th:text="${element.getEmail()}">alma@alma.com</th>
-            <td th:text="${element.getFullName()}">Lakatos Dezső</td>
-            <td th:text="${element.getNote()}">Jegyzet</td>
+            <td>
+                <span th:text="${element.getFullName()}">Lakatos Dezső</span>
+                <span style="font-style: italic;" th:if="${element.getNote()}">
+                    <br/>
+                    Note:
+                    <span th:text="${element.getNote()}">Valami jegyzet</span>
+                </span>
+            </td>
             <td>
                 <a th:href="${'/loan/new/'+device.getId()+'/'+element.getId()}">
                     <button type="button" class="btn btn-success">Gib</button>

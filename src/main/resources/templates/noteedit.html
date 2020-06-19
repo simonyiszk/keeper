@@ -9,7 +9,7 @@
 <div class="container">
     <form action="/" enctype="utf8" method="POST" th:action="@{${backUrl}}" th:object="${toEdit}">
         <div class="form-group">
-            <label>Jegyzet <b th:text="${toEdit.getEmail()}">valaki@alma.hu</b> felhasználóhoz</label>
+            <label>Jegyzet <b th:text="${toEdit.getFullName()}">Lakatos Géza</b> felhasználóhoz</label>
             <textarea class="form-control" rows="3" th:field="*{note}"></textarea>
         </div>
         <button class="btn btn-primary" type="submit">zsa</button>

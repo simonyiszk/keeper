@@ -15,14 +15,19 @@
         <thead> <tr>
             <th scope="col">Eszköz</th>
             <th scope="col">Tarháló</th>
-            <th scope="col">Note</th>
             <th scope="col">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${requests}">
             <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
-            <td th:text="${element.getElvinne().getFullName()}">Mark</td>
-            <td th:text="${element.getElvinne().getNote()}">Mark</td>
+            <td>
+                <span th:text="${element.getElvinne().getFullName()}">Lakatos Győző</span>
+                <span style="font-style: italic;" th:if="${element.getElvinne().getNote()}">
+                    <br/>
+                    Note:
+                    <span th:text="${element.getElvinne().getNote()}">Valami jegyzet</span>
+                </span>
+            </td>
             <td>
                 <a th:href="${'/loanrequest/accept/'+element.getId()}">
                     <button type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
