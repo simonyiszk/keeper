@@ -16,19 +16,19 @@
 
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">ID</th>
             <th scope="col">Email</th>
             <th scope="col">Neve</th>
+            <th scope="col">Note</th>
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${users}" th:classappend="${element.isKiadhat()} ? table-success ">
-            <th scope="row" th:text="${element.getId()}">1</th>
-            <td th:text="${element.getEmail()}">alma@alma.com</td>
-            <td th:text="${element.getFirstName()+' '+element.getLastName()}">Lakatos Dezső</td>
+            <th th:text="${element.getEmail()}">alma@alma.com</th>
+            <td th:text="${element.getFullName()}">Lakatos Dezső</td>
+            <td th:text="${element.getNote()}">Jegyzet</td>
             <td>
                 <a th:href="${'/loan/new/'+device.getId()+'/'+element.getId()}">
-                    <button type="button" class="btn btn-success">Neki</button>
+                    <button type="button" class="btn btn-success">Gib</button>
                 </a>
             </td>
         </tr>

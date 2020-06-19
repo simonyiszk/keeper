@@ -117,4 +117,31 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/editnote/{userid}")
+    public String editnote(Model model, HttpSession session, @PathVariable("userid") Long userid){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        Optional<UserEntity> toEdit = userRepository.findById(userid);
+        if (toEdit.isEmpty()){
+            return "redirect:/";
+        }
+        model.addAttribute("toEdit",toEdit.get());
+        model.addAttribute("user",user);
+        model.addAttribute("backUrl","/user/editnote/"+toEdit.get().getId());
+        return "noteedit";
+    }
+
+    @PostMapping("/editnote/{userid}")
+    public String editnotesave(@ModelAttribute("toEdit") UserEntity toEdit,
+                               BindingResult bindingResult,
+                               @PathVariable("userid") Long userid){
+        Optional<UserEntity> toEditDb = userRepository.findById(userid);
+        if (toEditDb.isEmpty()){
+            return "redirect:/";
+        }
+        UserEntity toEditValid = toEditDb.get();
+        toEditValid.setNote(toEdit.getNote());
+        userRepository.save(toEditValid);
+        return "redirect:/admin/users";
+    }
 }

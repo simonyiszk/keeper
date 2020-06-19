@@ -13,15 +13,18 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">ID</th>
             <th scope="col">Email</th>
+            <th scope="col">Note</th>
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${users}" th:classappend="${element.isKiadhat()} ? table-success ">
-            <th scope="row" th:text="${element.getId()}">1</th>
             <td th:text="${element.getEmail()}">Mark</td>
+            <td th:text="${element.getNote()}">Mark</td>
             <td>
+                <a th:href="${'/user/editnote/'+element.getId()}">
+                    <button type="button" class="btn btn-primary">Jegyzet szerkesztése</button>
+                </a>
                 <a th:href="@{makemember(useremail=${element.getEmail()})}" th:if="${!element.isKiadhat()}">
                     <button type="button" class="btn btn-success">Taggá kijelölés</button>
                 </a>
@@ -35,8 +38,6 @@
         </tr>
         </tbody>
     </table>
-
-    <a th:href="@{/admin/users/new}" class="btn btn-block btn-primary">Új enber</a>
 </div>
 </body>
 </html>

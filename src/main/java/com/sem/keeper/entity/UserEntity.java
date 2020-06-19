@@ -93,4 +93,7 @@ public class UserEntity implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Collection<LoanEntity> loanEntities;
+
+    @JsonIgnore
+    private String note;
 }
