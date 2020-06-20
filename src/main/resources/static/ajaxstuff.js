@@ -7,7 +7,9 @@ async function getReqdItems() {
     reqdItems = JSON.parse(await resp.text());
 }
 
-// Kézműves form binding. Majd írok angulart is, most ez van. Amúgy ha akarsz segíteni, várlak szeretettel
+var itemsPerPage = localStorage.getItem("semItemsPerPage")||"10";
+
+// Kézműves data binding. Majd írok angulart is, most ez van. Amúgy ha akarsz segíteni, várlak szeretettel
 
 function makeButton(button){
     let theA=document.createElement("a")
@@ -31,12 +33,19 @@ function makeButton(button){
     button.parent.appendChild(theA)
 }
 
-async function loaddevicesroot(page, pagesize) {
+function setItemsPerPage(number){
+    itemsPerPage=number;
+    localStorage.setItem("semItemsPerPage", number);
+    semcurrentpage=0
+    loaddevicesroot(0)
+}
+
+async function loaddevicesroot(page) {
     if (reqdItems == null){
         await getReqdItems()
     }
     let searchbox=document.getElementById("searchTerm")
-    let resp = await fetch(`${window.location.origin}/ajax/devicesearch/${page}?term=${searchbox.value}`);
+    let resp = await fetch(`${window.location.origin}/ajax/devicesearch/${page}/${itemsPerPage}?term=${searchbox.value}`);
     let res = JSON.parse(await resp.text());
     let table = document.getElementById("tablebody");
     table.innerHTML="";
@@ -88,6 +97,7 @@ async function loaddevicesroot(page, pagesize) {
             element.classList.add("active")
         }
     })
+    document.getElementById("pageCount").innerText=`${semcurrentpage+1}/${res.totalPages}`
 }
 
 //TODO knockout

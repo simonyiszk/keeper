@@ -29,11 +29,12 @@ public class AjaxController {
         return devices.findAll(pageable);
     }
 
-    @GetMapping(value = {"/devicesearch","/devicesearch/{pageNumber}"})
+    @GetMapping(value = {"/devicesearch","/devicesearch/{pageNumber}","/devicesearch/{pageNumber}/{pageSize}"})
     public Page<DeviceEntity> searchDevice(@RequestParam String term,
-                                           @PathVariable Optional<Integer> pageNumber){
+                                           @PathVariable Optional<Integer> pageNumber,
+                                           @PathVariable Optional<Integer> pageSize){
         Integer page = pageNumber.orElse(0);
-        var pageable = PageRequest.of(page,10);
+        var pageable = PageRequest.of(page,pageSize.orElse(10));
         return devices.findByNameContainingIgnoreCase(term, pageable);
     }
 }

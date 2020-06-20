@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>alma</title>
 </head>
-<body onload="loaddevicesroot('0','10')">
+<body onload="loaddevicesroot('0')">
 
 <div th:replace="wireframe :: header"></div>
 
@@ -21,11 +21,25 @@
     <a href="/user/registration" ><button type="button" class="btn btn-primary">Regelési</button></a>
 </div>
 <div class="container" th:if="${user} != null and ${user?.getRoles()?.contains('ROLE_USER')}">
-    <div class="form-group">
-        <label for="searchTerm">Szörcs</label>
-        <input type="email" class="form-control" id="searchTerm"
-               placeholder="Krumplipucoló" onkeyup="loaddevicesroot(semcurrentpage,'10')">
-    </div>
+        <div class="form-group">
+            <label for="searchTerm">Szörcs</label>
+            <div class="contanier" style="display: flex;">
+                <input type="email" class="form-control" id="searchTerm"
+                       placeholder="Krumplipucoló" onkeyup="loaddevicesroot(semcurrentpage,'10')">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cuccos/oldal
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button" onclick="setItemsPerPage('5')">5</button>
+                        <button class="dropdown-item" type="button" onclick="setItemsPerPage('10')">10</button>
+                        <button class="dropdown-item" type="button" onclick="setItemsPerPage('20')">20</button>
+                        <button class="dropdown-item" type="button" onclick="setItemsPerPage('50')">50</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
@@ -42,6 +56,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item" id="prevbutton"><a class="page-link" onclick="if (!semfirst) loaddevicesroot(--semcurrentpage, '10')">Previous</a></li>
+            <li class="page-item"><a class="page-link" id="pageCount"> Alma </a> </li>
             <li class="page-item" id="nextbutton"><a class="page-link" onclick="if (!semlast) loaddevicesroot(++semcurrentpage, '10')">Next</a></li>
         </ul>
     </nav>
