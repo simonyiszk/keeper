@@ -53,8 +53,7 @@ public class LoanController {
     @GetMapping("/list/all")
     public String listAll(HttpSession session, Model model){
         UserEntity user = (UserEntity) session.getAttribute("user");
-        List<LoanEntity> loans  = StreamSupport.stream(loanRepository.findAll().spliterator(),false)
-                .collect(Collectors.toList());
+        Iterable<LoanEntity> loans = loanRepository.findAll();
 
         model.addAttribute("loans", loans);
         model.addAttribute("user", user);
