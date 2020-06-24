@@ -9,7 +9,7 @@
 
 <div th:replace="wireframe :: header"></div>
 
-<body>
+<body onload="replaceDatesWithNiceStuff();">
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead><tr>
@@ -22,8 +22,8 @@
         <tr th:classappend="${element.getBackDateReal()} ? 'table-secondary' " th:each="element: ${loans}">
             <th th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</th>
             <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
-            <td th:text="${{element.getTakeDate()}}">alma</td>
-            <td th:text="${{element.getBackDatePlanned()}}">alma</td>
+            <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
+            <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
 
         </tr>
         </tbody>

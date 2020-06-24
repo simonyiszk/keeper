@@ -12,7 +12,9 @@
     <script th:text="${'var admin = '+user?.isKiadhat()}"></script>
     <script th:text="${'var userid = '+user?.getId()}"></script>
     <script src="https://kit.fontawesome.com/5a5059f003.js" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha256-ZsWP0vT+akWmvEMkNYgZrPHKU9Ke8nYBPC3dqONp1mY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/hu.min.js" integrity="sha256-ZFHYxSxlzaE7+m3R50XGo+HzADaYSfZkRBhX09UEZro=" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{~/static/dateReplacer.js}"></script>
 </head>
 <body>
 

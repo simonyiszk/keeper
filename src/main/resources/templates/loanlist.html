@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>alma</title>
 </head>
-<body>
+<body onload="replaceDatesWithNiceStuff()">
 
 <div th:replace="wireframe :: header"></div>
 
@@ -25,8 +25,8 @@
             <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
-            <td th:text="${{element.getTakeDate()}}">Mark</td>
-            <td th:text="${{element.getBackDatePlanned()}}">Mark</td>
+            <td th:text="${{element.getTakeDate()}}" class="replace">Mark</td>
+            <td th:text="${{element.getBackDatePlanned()}}" class="replace">Mark</td>
             <td>
                 <a th:href="${'/loan/return/'+element.getId()}">
                     <button type="button" class="btn btn-success">Visszavesz</button>
