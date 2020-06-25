@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -82,6 +84,12 @@ public class AjaxController {
                 }
             }
         }
+    }
+
+    @GetMapping("/outdevices")
+    public Collection<Long> outdevices(){
+        return loanRepository.findByVisszavetteIsNullOrderByTakeDate().stream()
+                .map(x->x.getDeviceEntity().getId()).collect(Collectors.toSet());
     }
 }
 

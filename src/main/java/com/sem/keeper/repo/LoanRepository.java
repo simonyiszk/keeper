@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -21,6 +22,8 @@ public interface LoanRepository extends PagingAndSortingRepository<LoanEntity, L
     //List<LoanEntity> findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(DeviceEntity deviceEntity);
 
     List<LoanEntity> findByVisszavetteIsNullOrderByTakeDate();
+
+    LoanEntity findFirstByDeviceEntityOrderByTakeDateDesc(DeviceEntity deviceEntity);
 
     Page<LoanEntity> findByVisszavetteIsNullOrderByTakeDate(Pageable pageable);
 }
