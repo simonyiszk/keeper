@@ -2,12 +2,16 @@ package com.sem.keeper.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import com.sem.keeper.model.DeviceRegDto;
+import com.sem.keeper.repo.LoanRequestRepository;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * A kikölcsönözhető eszközöket reprezentáló entitás
@@ -56,7 +60,8 @@ public class DeviceEntity implements Serializable {
     @OneToMany(mappedBy = "deviceEntity",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Collection<LoanEntity> loanEntities;
+    @OrderBy("takeDate")
+    private List<LoanEntity> loanEntities;
 
     @Override
     public String toString() {
@@ -97,6 +102,14 @@ public class DeviceEntity implements Serializable {
                     .map(LoanEntity::getLength)
                     .reduce(Duration.ZERO,Duration::plus);
         }
+    }
+
+    @JsonIgnore
+    public boolean isKiadva(){
+        if (loanEntities.size()==0) return false;
+        //kiálasztja az időrendben legkésőbbi kölcsönzést. stream.sorted.findfirst nem megy
+        LoanEntity loanEntity = loanEntities.stream().sorted().collect(Collectors.toList()).get(loanEntities.size()-1);
+        return loanEntity.getBackDateReal() == null;
     }
 
 }

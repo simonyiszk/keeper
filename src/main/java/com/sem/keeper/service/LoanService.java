@@ -2,7 +2,9 @@ package com.sem.keeper.service;
 
 import com.sem.keeper.entity.DeviceEntity;
 import com.sem.keeper.entity.LoanEntity;
+import com.sem.keeper.entity.LoanRequestEntity;
 import com.sem.keeper.entity.UserEntity;
+import com.sem.keeper.repo.DeviceRepository;
 import com.sem.keeper.repo.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,20 @@ public class LoanService {
     @Autowired
     LoanRepository loanRepository;
 
-    public LoanEntity newLoan(LoanEntity loanEntity){
-        return loanRepository.save(loanEntity);
+    @Autowired
+    DeviceRepository deviceRepository;
+
+    public LoanEntity fromLoanRequest(LoanRequestEntity loanRequestEntity, UserEntity kiad) throws DeviceAlreadyOnLoanException {
+        if (loanRequestEntity.getDeviceEntity().isKiadva()){
+            throw new DeviceAlreadyOnLoanException("Device is already on loan");
+        }
+
+        LoanEntity neu = new LoanEntity(loanRequestEntity, kiad);
+        return loanRepository.save(neu);
     }
 
-    public LoanEntity newLoan(DeviceEntity deviceEntity, UserEntity kiad, UserEntity kivesz){
+    public LoanEntity newLoan(DeviceEntity deviceEntity, UserEntity kiad, UserEntity kivesz) throws DeviceAlreadyOnLoanException {
+        if (deviceEntity.isKiadva()) throw new DeviceAlreadyOnLoanException("F");
         LoanEntity toAdd = new LoanEntity();
         toAdd.setDeviceEntity(deviceEntity);
         toAdd.setKiadta(kiad);

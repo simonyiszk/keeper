@@ -8,6 +8,7 @@ import com.sem.keeper.service.LoanService;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class LoanEntity implements Serializable {
+public class LoanEntity implements Serializable, Comparable<LoanEntity> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -103,4 +104,8 @@ public class LoanEntity implements Serializable {
         return Duration.between(takeDate, Objects.requireNonNullElseGet(backDateReal, LocalDateTime::now));
     }
 
+    @Override
+    public int compareTo(@NotNull LoanEntity loanEntity) {
+        return takeDate.compareTo(loanEntity.takeDate);
+    }
 }

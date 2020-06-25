@@ -2,9 +2,15 @@ var semcurrentpage = 0
 var semlast = false
 var semfirst = true
 var reqdItems = null
+var outDevices = null
 async function getReqdItems() {
     let resp = await fetch(`${window.location.origin}/user/myRequestIds`)
     reqdItems = JSON.parse(await resp.text());
+}
+
+async function getOutItems() {
+    let resp = await fetch(`${window.location.origin}/ajax/outdevices`)
+    outDevices = JSON.parse(await resp.text());
 }
 
 var itemsPerPage = localStorage.getItem("semItemsPerPage")||"10";
@@ -31,6 +37,9 @@ function makeButton(button){
     theA.appendChild(theButton)
     theA.href=button.link
     button.parent.appendChild(theA)
+    if(button.disableifout && outDevices.includes(button.id)){
+        theButton.disabled=true
+    }
 }
 
 function setItemsPerPage(number){
@@ -43,6 +52,9 @@ function setItemsPerPage(number){
 async function loaddevicesroot(page) {
     if (reqdItems == null){
         await getReqdItems()
+    }
+    if (outDevices == null){
+        await getOutItems()
     }
     let searchbox=document.getElementById("searchTerm")
     let resp = await fetch(`${window.location.origin}/ajax/devicesearch/${page}/${itemsPerPage}?term=${searchbox.value}`);
@@ -74,14 +86,14 @@ async function loaddevicesroot(page) {
 
         if (admin){
             buttons=[
-                {id: device.id, text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0]},
-                {id: device.id, text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0]},
-                {id: device.id, i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0]},
-                {id: device.id, i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0]}
+                {id: device.id, text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0], disableifout:true},
+                {id: device.id, text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0], disableifout:true},
+                {id: device.id, i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0], disableifout:false},
+                {id: device.id, i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0], disableifout:false}
             ]
         } else {
             buttons=[
-                    {id: device.id, text:"Rekvesztálás",link:`loan/request/${device.id}`, class: "btn-primary", parent:neu.children[2]}
+                    {id: device.id, text:"Rekvesztálás",link:`loan/request/${device.id}`, class: "btn-primary", parent:neu.children[2], disableifout:false}
                     ]
         }
         buttons.forEach(makeButton)
