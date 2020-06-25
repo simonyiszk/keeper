@@ -6,6 +6,7 @@ import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.DeviceRepository;
 import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.UserRepository;
+import com.sem.keeper.service.DeviceAlreadyOnLoanException;
 import com.sem.keeper.service.LoanRequestService;
 import com.sem.keeper.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
@@ -104,12 +106,17 @@ public class LoanController {
     @GetMapping("/new/{deviceid}/{userid}/ok")
     public RedirectView addNewLoanFinalStep(HttpSession session, Model model,
                                             @PathVariable("deviceid") String deviceid,
-                                            @PathVariable("userid") String userid){
+                                            @PathVariable("userid") String userid,
+                                            RedirectAttributes redirectAttributes){
         UserEntity user = (UserEntity) session.getAttribute("user");
         DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
         Optional<UserEntity> tarhaUser = userRepository.findById(Long.parseLong(userid));
-        loanService.newLoan(device,user,tarhaUser.get());
-        return new RedirectView("/loan/list");
+        try {
+            loanService.newLoan(device,user,tarhaUser.get());
+        } catch (DeviceAlreadyOnLoanException ex){
+            redirectAttributes.addFlashAttribute("message","Az eszköz már ki van adva :(");
+        }
+        return new RedirectView("/device/"+device.getId());
     }
 
     @GetMapping("/request/{deviceid}")

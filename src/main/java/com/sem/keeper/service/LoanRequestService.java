@@ -1,10 +1,8 @@
 package com.sem.keeper.service;
 
 import com.sem.keeper.entity.DeviceEntity;
-import com.sem.keeper.entity.LoanEntity;
 import com.sem.keeper.entity.LoanRequestEntity;
 import com.sem.keeper.entity.UserEntity;
-import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.LoanRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +24,8 @@ public class LoanRequestService {
         return loanRequestRepository.save(neu);
     }
 
-    public void accept(LoanRequestEntity loanRequestEntity, UserEntity kiad){
-        LoanEntity neu = new LoanEntity(loanRequestEntity, kiad);
-        loanService.newLoan(neu);
+    public void accept(LoanRequestEntity loanRequestEntity, UserEntity kiad) throws DeviceAlreadyOnLoanException {
+        loanService.fromLoanRequest(loanRequestEntity, kiad);
         loanRequestRepository.delete(loanRequestEntity);
     }
 

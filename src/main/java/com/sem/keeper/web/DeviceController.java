@@ -1,8 +1,7 @@
 package com.sem.keeper.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sem.keeper.entity.DeviceEntity;
-import com.sem.keeper.entity.LoanRequestEntity;
+import com.sem.keeper.entity.LoanEntity;
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.model.DeviceRegDto;
 import com.sem.keeper.repo.DeviceRepository;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Collection;
 
 @Controller
 @RequestMapping("/device")
@@ -34,6 +32,9 @@ public class DeviceController {
 
     @Autowired
     LoanRequestRepository loanRequestRepository;
+
+    @Autowired
+    LoanRepository loanRepository;
 
     @GetMapping("/delete/{deviceid}")
     public RedirectView delete(@PathVariable("deviceid") String deviceid){
@@ -92,6 +93,8 @@ public class DeviceController {
         DeviceEntity deviceEntity = deviceRepository.findById(deviceid).get();
         model.addAttribute("device", deviceEntity);
 
+        LoanEntity lastLoan = loanRepository.findFirstByDeviceEntityOrderByTakeDateDesc(deviceEntity);
+        model.addAttribute("lastloanid", lastLoan.getId());
         return "deviceprofile";
     }
 
