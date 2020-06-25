@@ -29,11 +29,11 @@
                 </span>
             </td>
             <td>
-                <a th:href="${'/loanrequest/accept/'+element.getId()}">
-                    <button type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
+                <a th:href="${'/loanrequest/accept/'+element.getId()}" class="btn btn-success">
+                    <i class="fas fa-check"></i>
                 </a>
-                <a th:href="${'/loanrequest/deny/'+element.getId()}">
-                    <button type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                <a th:href="${'/loanrequest/deny/'+element.getId()}" class="btn btn-danger">
+                    <i class="fas fa-times"></i>
                 </a>
             </td>
         </tr>

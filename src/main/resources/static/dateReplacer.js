@@ -4,7 +4,7 @@ function replaceDatesWithNiceStuff() {
         moment().locale("hu");
         let text = a[i].innerText;
         if (text) {
-            a[i].innerText = moment(a[i].innerText).fromNow();
+            a[i].innerText = moment(text).fromNow();
         }
     }
 }

@@ -1,9 +1,13 @@
 package com.sem.keeper.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sem.keeper.entity.DeviceEntity;
+import com.sem.keeper.entity.LoanRequestEntity;
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.model.DeviceRegDto;
 import com.sem.keeper.repo.DeviceRepository;
+import com.sem.keeper.repo.LoanRepository;
+import com.sem.keeper.repo.LoanRequestRepository;
 import com.sem.keeper.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/device")
@@ -26,6 +31,9 @@ public class DeviceController {
 
     @Autowired
     DeviceRepository deviceRepository;
+
+    @Autowired
+    LoanRequestRepository loanRequestRepository;
 
     @GetMapping("/delete/{deviceid}")
     public RedirectView delete(@PathVariable("deviceid") String deviceid){

@@ -32,7 +32,8 @@
             <p th:each="error : ${#fields.errors('barcode')}"
                th:text="${error}">Validation error</p>
         </div>
-        <button class="btn btn-primary" type="submit">zsa</button>
+        <button class="btn btn-success" type="submit">zsa</button>
+        <button class="btn btn-link" type="button" onclick="window.history.back()">Cancel</button>
     </form>
 </div>
 
