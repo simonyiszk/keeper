@@ -72,8 +72,19 @@ public class DeviceController {
     public RedirectView newDevice(
             @ModelAttribute("newdevice") @Valid DeviceRegDto deviceRegDto,
             HttpServletRequest request, Errors errors) {
-        deviceService.addDevice(deviceRegDto);
-        return new RedirectView("/device/list");
+        DeviceEntity deviceEntity = deviceService.addDevice(deviceRegDto);
+        return new RedirectView("/device/"+deviceEntity.getId());
+    }
+
+    @GetMapping("{deviceid}")
+    public String profile(Model model, HttpSession session, @PathVariable("deviceid") Long deviceid){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
+
+        DeviceEntity deviceEntity = deviceRepository.findById(deviceid).get();
+        model.addAttribute("device", deviceEntity);
+
+        return "deviceprofile";
     }
 
 }

@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Egy eszköz egyszeri kibérlését reprezentáló entitás
@@ -94,6 +96,11 @@ public class LoanEntity implements Serializable {
         kiadta=kiad;
         takeDate=LocalDateTime.now();
         backDatePlanned=takeDate.plusDays(7);
+    }
+
+    @JsonIgnore
+    public Duration getLength(){
+        return Duration.between(takeDate, Objects.requireNonNullElseGet(backDateReal, LocalDateTime::now));
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.Collection;
 
 /**
@@ -88,8 +89,14 @@ public class DeviceEntity implements Serializable {
         this.barcode=deviceRegDto.getBarcode();
     }
 
-    public boolean isAlma(){
-        return true;
+    public Duration getTotalLoanTime(){
+        if (loanEntities.size()==0){
+            return Duration.ZERO;
+        } else {
+            return loanEntities.stream()
+                    .map(LoanEntity::getLength)
+                    .reduce(Duration.ZERO,Duration::plus);
+        }
     }
 
 }

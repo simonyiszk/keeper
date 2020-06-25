@@ -63,7 +63,16 @@ async function loaddevicesroot(page) {
             newChild.children[0].style.cssText="display: flex;flex-direction:column"
             neu.appendChild(newChild)
         }
-        neu.children[0].innerText=device.name;
+        let deviceNameHTML;
+        if (admin){
+            deviceNameHTML=document.createElement("a");
+            deviceNameHTML.href=`/device/${device.id}`;
+            deviceNameHTML.innerText=device.name;
+        } else {
+            deviceNameHTML=document.createElement("span");
+            deviceNameHTML.innerText=device.name;
+        }
+        neu.children[0].appendChild(deviceNameHTML);
         neu.children[1].innerText=device.description;
 
         let buttons=[]

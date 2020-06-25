@@ -9,5 +9,6 @@ public class FormatterConfig implements WebMvcConfigurer {
 
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new LocalDateTimeFormatter());
+        registry.addFormatter(new DurationFormatter());
     }
 }

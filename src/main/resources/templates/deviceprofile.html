@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wireframe::head">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>alma</title>
+</head>
+
+<div th:replace="wireframe :: header"></div>
+
+<body onload="replaceDatesWithNiceStuff();">
+<div class="container">
+    <h1 th:text="${device.getName()}"></h1>
+    <i>Megjegyzés: Alább egy random cuki kutya látható. Ide majd a cucc fotója jön, de azt még nem írtam meg xd</i>
+    <div class="container" style="display: flex;">
+        <img src="https://placedog.net/300/300?random" alt="Itt egy kutya kéne hogy legyen">
+        <div class="container" style="display: flex; flex-direction: column;">
+            <i>Leírás:</i>
+
+            <span th:text="${device.getDescription()}">Eszköz leírása</span>
+            <div class="container" style="margin-top: auto;">
+                <a th:href="${'/loan/new/'+device.getId()}" style="margin: auto;"><button class="btn btn-primary">Kiadás</button></a>
+                <a th:href="${'/loan/new/'+device.getId()+'/'+user.getId()}" style="margin: auto;"><button class="btn btn-success">Kivétel</button></a>
+                <a th:href="${'/device/edit/'+device.getId()}" style="margin: auto;"><button class="btn btn-secondary"><i class="fas fa-pen" aria-hidden="true"></i></button></a>
+                <a th:href="${'/device/delete/'+device.getId()}" style="margin: auto;"><button class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i></button></a>
+            </div>
+        </div>
+    </div>
+    <h2>Statisztika</h2>
+    <div class="container" style="display:flex;">
+        <span style="margin: auto;">Kölcsönzések száma: <span th:text="${device.getLoanEntities().size()}"></span> </span>
+        <span style="margin: auto;">Kölcsönzések összeideje: <span th:text="${{device.getTotalLoanTime()}}"></span> </span>
+        <span th:if="${device.getLoanEntities().size()>0}" style="margin: auto;">Kölcsönzések átlag ideje:
+            <span  th:text="${{device.getTotalLoanTime().dividedBy(device.getLoanEntities().size())}}"></span>
+        </span>
+
+    </div>
+    <h2>Kölcsönzések</h2>
+    <table class="table table-hover table-bordered table-striped">
+        <thead><tr>
+            <th scope="col">Elvitte</th>
+            <th scope="col">Kikerült</th>
+            <th scope="col">Határidő</th>
+            <th scope="col">Visszahozta</th>
+        </tr></thead>
+        <tbody id="tablebody">
+        <tr th:each="element: ${device.getLoanEntities()}">
+            <td th:text="${{element.getElvitte().getFullName()}}">alma</td>
+            <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
+            <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
+            <td th:text="${{element.getBackDateReal()}}" class="replace">alma</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
