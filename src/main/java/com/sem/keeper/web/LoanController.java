@@ -12,10 +12,7 @@ import com.sem.keeper.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -63,13 +60,33 @@ public class LoanController {
     }
 
     @GetMapping("/return/{loanid}")
+    public String returnLoan(HttpSession session, Model model,
+                             @PathVariable("loanid") Long loanid){
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        Optional<LoanEntity> loanEntity = loanRepository.findById(loanid);
+
+        model.addAttribute("user", user);
+        model.addAttribute("loanEntity", loanEntity.get());
+
+        return "confirmReturnLoan";
+    }
+
+    @PostMapping("/return/{loanid}")
     public RedirectView returnLoan(HttpSession session, Model model,
-                             @PathVariable("loanid") String loanid){
+                                   @PathVariable("loanid") String loanid,
+                                   @ModelAttribute("loanEntity") LoanEntity loanEntityNote,
+                                   RedirectAttributes redirectAttributes){
         UserEntity user = (UserEntity) session.getAttribute("user");
         Optional<LoanEntity> loanEntity = loanRepository.findById(Long.parseLong(loanid));
+        if(loanEntity.isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "A kölcsönzés nem található");
+            return new RedirectView("/loan/list");
+        }
+        loanEntity.get().setNote(loanEntityNote.getNote());
         loanService.visszahoz(loanEntity.get(), user);
         return new RedirectView("/loan/list");
     }
+
 
     @GetMapping("/extend/{loanid}")
     public RedirectView extendLoan(HttpSession session, Model model,
@@ -103,16 +120,18 @@ public class LoanController {
         return "newloanstep3";
     }
 
-    @GetMapping("/new/{deviceid}/{userid}/ok")
+    @PostMapping("/new/{deviceid}/{userid}")
     public RedirectView addNewLoanFinalStep(HttpSession session, Model model,
-                                            @PathVariable("deviceid") String deviceid,
-                                            @PathVariable("userid") String userid,
-                                            RedirectAttributes redirectAttributes){
+                                            @PathVariable("deviceid") long deviceid,
+                                            @PathVariable("userid") long userid,
+                                            RedirectAttributes redirectAttributes,
+                                            @RequestParam Optional<String> note){
         UserEntity user = (UserEntity) session.getAttribute("user");
-        DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
-        Optional<UserEntity> tarhaUser = userRepository.findById(Long.parseLong(userid));
+        DeviceEntity device = deviceRepository.findById(deviceid);
+        Optional<UserEntity> tarhaUser = userRepository.findById(userid);
+
         try {
-            loanService.newLoan(device,user,tarhaUser.get());
+            loanService.newLoan(device,user,tarhaUser.get(), note);
         } catch (DeviceAlreadyOnLoanException ex){
             redirectAttributes.addFlashAttribute("message","Az eszköz már ki van adva :(");
         }

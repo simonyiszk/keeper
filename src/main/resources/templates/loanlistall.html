@@ -20,6 +20,7 @@
             <th scope="col">Elvitte</th>
             <th scope="col">Határidő</th>
             <th scope="col">Visszahozta</th>
+            <th scope="col">Note</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${loans}">
@@ -30,6 +31,7 @@
             <td th:text="${{element.getTakeDate()}}" class="replace">Mark</td>
             <td th:text="${{element.getBackDatePlanned()}}" class="replace">Mark</td>
             <td th:text="${{element.getBackDateReal()}}" class="replace">Mark</td>
+            <td th:text="${{element.getNote()}}">Mark</td>
         </tr>
         </tbody>
     </table>
