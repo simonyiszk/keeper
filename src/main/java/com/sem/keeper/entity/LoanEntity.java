@@ -82,6 +82,8 @@ public class LoanEntity implements Serializable, Comparable<LoanEntity> {
     @Column(name = "back_date_real")
     private LocalDateTime backDateReal;
 
+    private String note;
+
     /**
      * Megnézi, hogy az user elkésett-e
      * @return True, ha az user elkésett a visszahozatallal
@@ -89,6 +91,14 @@ public class LoanEntity implements Serializable, Comparable<LoanEntity> {
     @JsonIgnore
     public boolean isLate(){
         return LocalDateTime.now().isAfter(backDatePlanned);
+    }
+
+    public LoanEntity(DeviceEntity deviceEntity, UserEntity kiad, UserEntity elvitte){
+        this.elvitte=elvitte;
+        this.deviceEntity=deviceEntity;
+        this.kiadta=kiad;
+        takeDate=LocalDateTime.now();
+        backDatePlanned=takeDate.plusDays(7);
     }
 
     public LoanEntity(LoanRequestEntity loanRequestEntity, UserEntity kiad){

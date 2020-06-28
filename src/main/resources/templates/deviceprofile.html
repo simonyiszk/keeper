@@ -12,12 +12,13 @@
 <div th:replace="wireframe :: header"></div>
 <span th:text="${device.getId()}" id="deviceid" hidden></span>
 <script defer type="text/javascript" th:unless="${user.isKiadhat()}" th:src="@{~/static/singlerequestbuttondisabler.js}"></script>
+<script defer type="text/javascript" th:if="${user.isKiadhat()}" th:src="@{~/static/wunderedit.js}"></script>
 <div class="container">
     <div class="alert alert-primary" role="alert" th:if="${message}" th:text="${message}"></div>
     <h1 th:text="${device.getName()}"></h1>
     <i>Megjegyzés: Alább egy random cuki kutya látható. Ide majd a cucc fotója jön, de azt még nem írtam meg xd</i>
     <div class="container" style="display: flex;">
-        <img src="https://placedog.net/300/300?random" alt="Itt egy kutya kéne hogy legyen">
+        <img src="https://placedog.net/300/300?random" alt="Itt egy kutya kéne hogy legyen" class="rounded">
         <div class="container" style="display: flex; flex-direction: column;">
             <i>Leírás:</i>
 
@@ -69,6 +70,7 @@
                 <th scope="col">Kikerült</th>
                 <th scope="col">Határidő</th>
                 <th scope="col">Visszahozta</th>
+                <th scope="col">Note</th>
             </tr></thead>
             <tbody id="tablebody">
             <tr th:each="element: ${device.getLoanEntities()}">
@@ -76,6 +78,12 @@
                 <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
                 <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
                 <td th:text="${{element.getBackDateReal()}}" class="replace">alma</td>
+                <td style="display:flex; flex-direction:row;">
+                    <p th:id="${element.getId()+'p'}" th:text="${{element.getNote()}}" style="margin: auto">A felét vitte el</p>
+                    <button th:id="${element.getId()+'btn'}" class="btn btn-success btn-sm" style="margin-left: auto" onclick="wunderedit(this.id);return 1;">
+                        <i class="fas fa-pen" aria-hidden="true"></i>
+                    </button>
+                </td>
 
             </tr>
             </tbody>

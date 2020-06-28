@@ -8,6 +8,7 @@ import com.sem.keeper.repo.DeviceRepository;
 import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.LoanRequestRepository;
 import com.sem.keeper.repo.UserRepository;
+import com.sem.keeper.service.LoanService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,9 +18,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,6 +38,9 @@ public class AjaxController {
 
     @Autowired
     LoanRepository loanRepository;
+
+    @Autowired
+    LoanService loanService;
 
     @Autowired
     UserRepository userRepository;
@@ -90,6 +97,17 @@ public class AjaxController {
     public Collection<Long> outdevices(){
         return loanRepository.findByVisszavetteIsNullOrderByTakeDate().stream()
                 .map(x->x.getDeviceEntity().getId()).collect(Collectors.toSet());
+    }
+
+    @PostMapping("/loanNote")
+    public String loanNoteEdit(@RequestBody Map<String, String> requestBody, HttpServletResponse response){
+        Optional<LoanEntity> loanEntity = loanRepository.findById(Long.parseLong(requestBody.get("num")));
+        if (loanEntity.isEmpty()){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Nein";
+        }
+        loanService.editNote(loanEntity.get(),requestBody.get("resStr"));
+        return "Alma";
     }
 }
 
