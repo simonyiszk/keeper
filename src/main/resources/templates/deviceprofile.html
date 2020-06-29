@@ -17,7 +17,7 @@
     <div class="alert alert-primary" role="alert" th:if="${message}" th:text="${message}"></div>
     <h1 th:text="${device.getName()}"></h1>
     <i>Megjegyzés: Alább egy random cuki kutya látható. Ide majd a cucc fotója jön, de azt még nem írtam meg xd</i>
-    <div class="container" style="display: flex;">
+    <div class="container d-flex p-2 flex-sm-wrap" style="display: flex;">
         <img src="https://placedog.net/300/300?random" alt="Itt egy kutya kéne hogy legyen" class="rounded">
         <div class="container" style="display: flex; flex-direction: column;">
             <i>Leírás:</i>
@@ -25,20 +25,20 @@
             <span th:text="${device.getDescription()}">Eszköz leírása</span>
             <span th:if="${device.isKiadva()}" style="margin-top: auto;">Kiadva</span>
             <span th:unless="${device.isKiadva()}" style="margin-top: auto;">Műhelyben</span>
-            <div class="container"  th:if="${session.user.isKiadhat()}">
-                <a th:if="${device.isKiadva()}" style="margin: auto;" class="btn btn-success" th:href="${'/loan/return/'+lastloanid}">
+            <div class="container d-flex p-2 flex-wrap" th:if="${session.user.isKiadhat()}">
+                <a th:if="${device.isKiadva()}" class="btn btn-success" style="margin: fill;" th:href="${'/loan/return/'+lastloanid}">
                     Visszavesz
                 </a>
-                <a th:unless="${device.isKiadva()}" th:href="${'/loan/new/'+device.getId()}" style="margin: auto;" class="btn btn-primary">
+                <a th:unless="${device.isKiadva()}" style="margin: fill;" th:href="${'/loan/new/'+device.getId()}" class="btn btn-primary">
                     Kiadás
                 </a>
-                <a th:unless="${device.isKiadva()}" th:href="${'/loan/new/'+device.getId()+'/'+session.user.getId()}" style="margin: auto;" class="btn btn-success">
+                <a th:unless="${device.isKiadva()}" style="margin: fill;" th:href="${'/loan/new/'+device.getId()+'/'+session.user.getId()}" class="btn btn-success">
                     Kivétel
                 </a>
-                <a th:href="${'/device/edit/'+device.getId()}" style="margin: auto;" class="btn btn-secondary">
+                <a th:href="${'/device/edit/'+device.getId()}" style="margin: fill;" class="btn btn-secondary">
                     <i class="fas fa-pen" aria-hidden="true"></i>
                 </a>
-                <a th:href="${'/device/delete/'+device.getId()}" style="margin: auto;" class="btn btn-danger">
+                <a th:href="${'/device/delete/'+device.getId()}" style="margin: fill;" class="btn btn-danger">
                     <i class="fas fa-trash" aria-hidden="true"></i>
                 </a>
             </div>
@@ -52,7 +52,7 @@
     </div>
     <div class="container" th:if="${session.user.isKiadhat()}">
         <h2>Statisztika</h2>
-        <div class="container" style="display:flex;">
+        <div class="container" style="display:flex;flex-flow: row wrap">
             <span style="margin: auto;">Kölcsönzések száma: <span th:text="${device.getLoanEntities().size()}"></span> </span>
             <span style="margin: auto;">Kölcsönzések összeideje: <span th:text="${{device.getTotalLoanTime()}}"></span> </span>
             <span th:if="${device.getLoanEntities().size()>0}" style="margin: auto;">Kölcsönzések átlag ideje:
