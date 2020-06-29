@@ -61,8 +61,6 @@ public class AdminController {
 
     @GetMapping("/users")
     public String listUsers(HttpSession session, Model model) {
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
         model.addAttribute("users", userRepository.findAll());
         return "userlist";
     }
@@ -71,8 +69,6 @@ public class AdminController {
     public String root(Model model, HttpSession session){
         //
         // HttpSession session = request.getSession();
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
         model.addAttribute("musicUrl",goodMusicService.getNextGoodMusic().getUrl());
         return "admin";
     }

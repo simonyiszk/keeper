@@ -28,7 +28,7 @@
                 <a th:href="@{makemember(useremail=${element.getEmail()})}" th:if="${!element.isKiadhat()}">
                     <button type="button" class="btn btn-success">Taggá kijelölés</button>
                 </a>
-                <a th:href="@{unmakemember(useremail=${element.getEmail()})}" th:if="${element.isKiadhat()}" th:attrappend="disabled=${user.getEmail().equals(element.getEmail())}?true:false">
+                <a th:href="@{unmakemember(useremail=${element.getEmail()})}" th:if="${element.isKiadhat()}">
                     <button type="button" class="btn btn-warning">Nem tag</button>
                 </a>
                 <a th:href="@{deleteuser(useremail=${element.getEmail()})}">

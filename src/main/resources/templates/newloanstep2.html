@@ -21,7 +21,7 @@
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
-        <tr th:each="element: ${users}" th:classappend="${element.getId() == user.getId()} ? table-success ">
+        <tr th:each="element: ${users}" th:classappend="${element.getId() == session.user.getId()} ? table-success ">
             <th th:text="${element.getEmail()}">alma@alma.com</th>
             <td>
                 <span th:text="${element.getFullName()}">Lakatos Dezső</span>

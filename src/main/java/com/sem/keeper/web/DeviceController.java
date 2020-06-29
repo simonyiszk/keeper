@@ -47,9 +47,6 @@ public class DeviceController {
     @GetMapping("/edit/{deviceid}")
     public String edit(Model model, HttpSession session, @PathVariable("deviceid") String deviceid){
         DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
-
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
         model.addAttribute("newdevice",device);
         model.addAttribute("backUrl","/device/edit/"+deviceid);
         return "newdevice";
@@ -87,9 +84,6 @@ public class DeviceController {
 
     @GetMapping("{deviceid}")
     public String profile(Model model, HttpSession session, @PathVariable("deviceid") Long deviceid){
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
-
         DeviceEntity deviceEntity = deviceRepository.findById(deviceid).get();
         model.addAttribute("device", deviceEntity);
 

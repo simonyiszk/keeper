@@ -11,16 +11,16 @@
 
 <div th:replace="wireframe :: header"></div>
 
-<div th:attr="data-loanreqs=${loanreqs},data-kiadhat=${user?.isKiadhat()}"></div>
+<div th:attr="data-loanreqs=${loanreqs},data-kiadhat=${session.user?.isKiadhat()}"></div>
 <div class="container" th:if="${message}">
     <h1 th:text="${message}"></h1>
 </div>
-<div class="container" th:if="${user} == null">
+<div class="container" th:if="${session.user} == null">
     Helló diló! Jelentkezz be léccy<br>
     <a href="/login" ><button type="button" class="btn btn-primary">Na jó</button></a>
     <a href="/user/registration" ><button type="button" class="btn btn-primary">Regelési</button></a>
 </div>
-<div class="container" th:if="${user} != null and ${user?.getRoles()?.contains('ROLE_USER')}">
+<div class="container" th:if="${session.user} != null and ${session.user?.getRoles()?.contains('ROLE_USER')}">
         <div class="form-group">
             <label for="searchTerm">Szörcs</label>
             <div class="contanier" style="display: flex;">
@@ -46,7 +46,7 @@
             <th scope="col">Név</th>
             <th scope="col">Leírás</th>
             <th scope="col">Kölcsönzés</th>
-            <th scope="col" th:if="${user !=null and user.isKiadhat()}">Kezelés</th>
+            <th scope="col" th:if="${session.user !=null and session.user.isKiadhat()}">Kezelés</th>
         </tr>
         </thead>
         <tbody id="tablebody">
@@ -62,7 +62,7 @@
     </nav>
 
     <br/>
-    <a href="/device/new" class="btn btn-block btn-primary" th:if="${user !=null and user.isKiadhat()}">Új eszköz hozzáadása</a>
+    <a href="/device/new" class="btn btn-block btn-primary" th:if="${session.user !=null and session.user.isKiadhat()}">Új eszköz hozzáadása</a>
 
     <span th:text="${'Verzió:'+@environment.getProperty('git.commit.id.abbrev')+': '+@environment.getProperty('git.commit.message.short')}"></span>
 

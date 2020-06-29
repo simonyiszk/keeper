@@ -50,7 +50,6 @@ public class RootController {
     public String root(HttpSession session, Map<String, Object> model){
         UserEntity user = (UserEntity) session.getAttribute("user");
 
-        model.put("user", user);
         Collection<LoanRequestEntity> loans = loanRequestRepository.findByElvinne(user);
         ObjectMapper objectMapper = new ObjectMapper();
         String loansStr;
