@@ -4,13 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <head th:fragment="head">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Alma</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script type="text/javascript" th:src="@{~/static/ajaxstuff.js}"></script>
     <link rel="stylesheet" href="/static/style.css" />
-    <script th:text="${'var admin = '+user?.isKiadhat()}"></script>
-    <script th:text="${'var userid = '+user?.getId()}"></script>
+    <script th:text="${'var admin = '+session.user?.isKiadhat()}"></script>
+    <script th:text="${'var userid = '+session.user?.getId()}"></script>
     <script src="https://kit.fontawesome.com/5a5059f003.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha256-ZsWP0vT+akWmvEMkNYgZrPHKU9Ke8nYBPC3dqONp1mY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/hu.min.js" integrity="sha256-ZFHYxSxlzaE7+m3R50XGo+HzADaYSfZkRBhX09UEZro=" crossorigin="anonymous"></script>
@@ -34,24 +35,24 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item" th:if="${user !=null and user.getRoles().contains('ROLE_MEMBER')}">
+                <li class="nav-item" th:if="${session.user !=null and session.user.getRoles().contains('ROLE_MEMBER')}">
                     <a class="nav-link" href="/admin">Csanád részleg</a>
                 </li>
-                <li class="nav-item" th:if="${user !=null and user.getRoles().contains('ROLE_USER')}">
+                <li class="nav-item" th:if="${session.user !=null and session.user.getRoles().contains('ROLE_USER')}">
                     <a class="nav-link" href="/profile">Kikölcsönzött cuccaim</a>
                 </li>
-                <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
+                <li class="nav-item" th:if="${session.user !=null and session.user.isKiadhat()}">
                     <a class="nav-link" href="/loan/list">Kint lévő cuccok</a>
                 </li>
-                <li class="nav-item" th:if="${user !=null and user.isKiadhat()}">
-                    <a class="nav-link" href="/loanrequest">Requestek</a>
+                <li class="nav-item" th:if="${session.user !=null and session.user.isKiadhat()}">
+                    <a class="nav-link" href="/loanrequest">Requestek<span th:if="${loanReqCnt}" th:text="${loanReqCnt}" class="badge badge-primary">4</span></a>
                 </li>
-                <li class="nav-item" th:if="${user} == null">
+                <li class="nav-item" th:if="${session.user} == null">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-                <li class="nav-item" th:unless="${user} == null">
+                <li class="nav-item" th:unless="${session.user} == null">
                     <a class="nav-link" href="/logout"
-                       th:text="${'Log out from '+user.getFirstName() + ' ' +user.getLastName()}">Log out</a>
+                       th:text="${'Log out from '+session.user.getFullName()}">Log out</a>
                 </li>
             </ul>
         </div>
