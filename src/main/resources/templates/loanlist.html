@@ -33,11 +33,11 @@
             <td th:text="${{element.getBackDatePlanned()}}" class="replace">Mark</td>
             <td th:text="${{element.getNote()}}">Mark</td>
             <td>
-                <a th:href="${'/loan/return/'+element.getId()}">
-                    <button type="button" class="btn btn-success">Visszavesz</button>
+                <a th:href="${'/loan/return/'+element.getId()}" class="btn btn-success">
+                    Visszavesz
                 </a>
-                <a th:href="${'/loan/extend/'+element.getId()}">
-                    <button type="button" class="btn btn-warning">Hosszabbít</button>
+                <a class="btn btn-warning" th:href="${'/loan/extend/'+element.getId()}">
+                    Hosszabbít
                 </a>
             </td>
         </tr>

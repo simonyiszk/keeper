@@ -29,8 +29,6 @@ public class LoanRequestController {
 
     @GetMapping
     public String list(HttpSession session, Model model){
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        model.addAttribute("user", user);
         List<LoanRequestEntity> requests = loanRequestRepository.findAll();
         model.addAttribute("requests", requests);
         return "loanreqlist";

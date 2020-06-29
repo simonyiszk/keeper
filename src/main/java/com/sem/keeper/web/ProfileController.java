@@ -32,7 +32,6 @@ public class ProfileController {
         UserEntity user = (UserEntity) session.getAttribute("user");
         List<LoanEntity> loans = loanRepository.findByElvitte(user);
         //List<LoanEntity> loans = null;
-        model.addAttribute("user",user);
         model.addAttribute("loans", loans);
         return "profile";
     }

@@ -11,8 +11,8 @@
 <body onload="replaceDatesWithNiceStuff();">
 <div th:replace="wireframe :: header"></div>
 <span th:text="${device.getId()}" id="deviceid" hidden></span>
-<script defer type="text/javascript" th:unless="${user.isKiadhat()}" th:src="@{~/static/singlerequestbuttondisabler.js}"></script>
-<script defer type="text/javascript" th:if="${user.isKiadhat()}" th:src="@{~/static/wunderedit.js}"></script>
+<script defer type="text/javascript" th:unless="${session.user.isKiadhat()}" th:src="@{~/static/singlerequestbuttondisabler.js}"></script>
+<script defer type="text/javascript" th:if="${session.user.isKiadhat()}" th:src="@{~/static/wunderedit.js}"></script>
 <div class="container">
     <div class="alert alert-primary" role="alert" th:if="${message}" th:text="${message}"></div>
     <h1 th:text="${device.getName()}"></h1>
@@ -25,14 +25,14 @@
             <span th:text="${device.getDescription()}">Eszköz leírása</span>
             <span th:if="${device.isKiadva()}" style="margin-top: auto;">Kiadva</span>
             <span th:unless="${device.isKiadva()}" style="margin-top: auto;">Műhelyben</span>
-            <div class="container"  th:if="${user.isKiadhat()}">
+            <div class="container"  th:if="${session.user.isKiadhat()}">
                 <a th:if="${device.isKiadva()}" style="margin: auto;" class="btn btn-success" th:href="${'/loan/return/'+lastloanid}">
                     Visszavesz
                 </a>
                 <a th:unless="${device.isKiadva()}" th:href="${'/loan/new/'+device.getId()}" style="margin: auto;" class="btn btn-primary">
                     Kiadás
                 </a>
-                <a th:unless="${device.isKiadva()}" th:href="${'/loan/new/'+device.getId()+'/'+user.getId()}" style="margin: auto;" class="btn btn-success">
+                <a th:unless="${device.isKiadva()}" th:href="${'/loan/new/'+device.getId()+'/'+session.user.getId()}" style="margin: auto;" class="btn btn-success">
                     Kivétel
                 </a>
                 <a th:href="${'/device/edit/'+device.getId()}" style="margin: auto;" class="btn btn-secondary">
@@ -42,7 +42,7 @@
                     <i class="fas fa-trash" aria-hidden="true"></i>
                 </a>
             </div>
-            <div class="container" style="margin-top: auto;" th:unless="${user.isKiadhat()}">
+            <div class="container" style="margin-top: auto;" th:unless="${session.user.isKiadhat()}">
                 <a th:href="${'/loan/request/'+device.getId()}" id="requestButton"
                    class="btn btn-primary" style="margin: auto;">
                     Rekvesztálás
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="container" th:if="${user.isKiadhat()}">
+    <div class="container" th:if="${session.user.isKiadhat()}">
         <h2>Statisztika</h2>
         <div class="container" style="display:flex;">
             <span style="margin: auto;">Kölcsönzések száma: <span th:text="${device.getLoanEntities().size()}"></span> </span>
@@ -61,10 +61,10 @@
 
         </div>
     </div>
-    <div class="container" th:if="${user.isKiadhat()}">
+    <div class="container" th:if="${session.user.isKiadhat()}">
 
         <h2>Kölcsönzések</h2>
-        <table class="table table-hover table-bordered table-striped">
+        <table class="table table-hover table-bordered table-striped table-responsive-lg">
             <thead><tr>
                 <th scope="col">Elvitte</th>
                 <th scope="col">Kikerült</th>

@@ -56,7 +56,7 @@ public class UserController {
         UserEntity user = (UserEntity) httpSession.getAttribute("user");
         if (user == null)
             return new UserEntity();
-        user = userRepository.save(user);
+        user = userRepository.save(user); //TODO notneed?
         return user;
     }
 
@@ -120,13 +120,11 @@ public class UserController {
 
     @GetMapping("/editnote/{userid}")
     public String editnote(Model model, HttpSession session, @PathVariable("userid") Long userid){
-        UserEntity user = (UserEntity) session.getAttribute("user");
         Optional<UserEntity> toEdit = userRepository.findById(userid);
         if (toEdit.isEmpty()){
             return "redirect:/";
         }
         model.addAttribute("toEdit",toEdit.get());
-        model.addAttribute("user",user);
         model.addAttribute("backUrl","/user/editnote/"+toEdit.get().getId());
         return "noteedit";
     }
