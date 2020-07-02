@@ -74,7 +74,11 @@ public class LoanController {
             redirectAttributes.addFlashAttribute("message", "A kölcsönzés nem található");
             return new RedirectView("/loan/list");
         }
+
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        loanService.visszahoz(loanEntity.get(),user);
         loanEntity.get().setNote(loanEntityNote.getNote());
+        loanRepository.save(loanEntity.get());
         return new RedirectView("/loan/list");
     }
 
