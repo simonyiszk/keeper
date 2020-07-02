@@ -95,7 +95,6 @@ public class LoanController {
     public String newloanStepTwo(HttpSession session, Model model, @PathVariable("deviceid") String deviceid){
         DeviceEntity device = deviceRepository.findById(Long.parseLong(deviceid));
         model.addAttribute("device", device);
-        model.addAttribute("users",userRepository.findAll());
         //List<LoanEntity> loans = loanRepository.findByDeviceEntityAndVisszavetteIsNullOrderByTakeDate(device);
         return "newloanstep2";
     }
