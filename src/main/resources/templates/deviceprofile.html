@@ -8,7 +8,7 @@
 </head>
 
 
-<body onload="replaceDatesWithNiceStuff();">
+<body onload="replaceDatesWithNiceStuff();makeBars()">
 <div th:replace="wireframe :: header"></div>
 <span th:text="${device.getId()}" id="deviceid" hidden></span>
 <script defer type="text/javascript" th:unless="${session.user.isKiadhat()}" th:src="@{~/static/singlerequestbuttondisabler.js}"></script>
@@ -73,7 +73,8 @@
                 <th scope="col">Note</th>
             </tr></thead>
             <tbody id="tablebody">
-            <tr th:each="element: ${device.getLoanEntities()}">
+            <tr th:each="element: ${device.getLoanEntities()}" th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
+                th:classappend="${element.getBackDateReal()} ? '':'plstimebar'">
                 <td th:text="${{element.getElvitte().getFullName()}}">alma</td>
                 <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
                 <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>

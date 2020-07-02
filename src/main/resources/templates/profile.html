@@ -9,21 +9,18 @@
 
 <div th:replace="wireframe :: header"></div>
 
-<body onload="replaceDatesWithNiceStuff();">
+<body onload="replaceDatesWithNiceStuff();makeBars()">
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead><tr>
             <th scope="col">Eszköz</th>
             <th scope="col">Leírás</th>
-            <th scope="col">Elvitted</th>
-            <th scope="col">Határidő</th>
         </tr></thead>
         <tbody id="tablebody">
-        <tr th:classappend="${element.getBackDateReal()} ? 'table-secondary' " th:each="element: ${loans}">
+        <tr th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
+            th:classappend="${element.getBackDateReal()} ? 'table-secondary':'plstimebar'" th:each="element: ${loans}">
             <th th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</th>
             <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
-            <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
-            <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
 
         </tr>
         </tbody>
