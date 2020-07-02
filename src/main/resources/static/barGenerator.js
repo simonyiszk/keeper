@@ -15,7 +15,7 @@ function makeBars() {
         theProgress.style.width=percent
         let theTr=document.createElement("tr")
         let theTd=document.createElement("td")
-        theTr.title=`Elvitte: ${moment(rows[i].dataset['elvitte']).format('YYYY-MM-DD hh:mm')}<br>Határidő: ${moment(rows[i].dataset['deadline']).format('YYYY-MM-DD hh:mm')}<br>${parseInt(percent)}%`
+        theTr.title=`Elvitte: ${moment(rows[i].dataset['taken']).format('YYYY-MM-DD hh:mm')}<br>Határidő: ${moment(rows[i].dataset['deadline']).format('YYYY-MM-DD hh:mm')}<br>${parseInt(percent)}%`
         theTr.dataset['placement']="auto"
         theTr.dataset['html']="true"
         theTr.dataset['toggle']="tooltip"
