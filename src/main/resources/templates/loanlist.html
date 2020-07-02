@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>alma</title>
 </head>
-<body onload="replaceDatesWithNiceStuff()">
+<body onload="replaceDatesWithNiceStuff();makeBars()">
 
 <div th:replace="wireframe :: header"></div>
 
@@ -19,18 +19,17 @@
             <th scope="col">Eszköz</th>
             <th scope="col">Kölcsönző</th>
             <th scope="col">Kiadó</th>
-            <th scope="col">Elvitte</th>
-            <th scope="col">Határidő</th>
             <th scope="col">Note</th>
             <th scope="col">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
-        <tr th:each="element: ${loans}" th:classappend="${element.isLate()} ? table-danger ">
+        <tr class="plstimebar" th:id="${'loan'+element.getId()}"
+            th:each="element: ${loans}"
+            th:classappend="${element.isLate()} ? table-danger "
+            th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}">
             <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
-            <td th:text="${{element.getTakeDate()}}" class="replace">Mark</td>
-            <td th:text="${{element.getBackDatePlanned()}}" class="replace">Mark</td>
             <td th:text="${{element.getNote()}}">Mark</td>
             <td>
                 <a th:href="${'/loan/return/'+element.getId()}" class="btn btn-success">
