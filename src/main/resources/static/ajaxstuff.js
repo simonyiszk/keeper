@@ -30,7 +30,7 @@ function makeButton(button){
         i.classList.add(button.i)
         theButton.appendChild(i)
     }
-    if (reqdItems.includes(button.id)){
+    if (reqdItems?.includes(button.id)){
         theButton.disabled=true
         theButton.classList.add("btn-secondary")
     }
@@ -46,7 +46,8 @@ function setItemsPerPage(number){
     itemsPerPage=number;
     localStorage.setItem("semItemsPerPage", number);
     semcurrentpage=0
-    loaddevicesroot(0)
+    document.getElementById("searchTerm").onkeyup(undefined)
+
 }
 
 async function loaddevicesroot(page) {

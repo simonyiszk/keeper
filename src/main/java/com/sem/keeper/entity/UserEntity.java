@@ -94,6 +94,5 @@ public class UserEntity implements Serializable {
             orphanRemoval = true)
     private Collection<LoanEntity> loanEntities;
 
-    @JsonIgnore
     private String note;
 }
