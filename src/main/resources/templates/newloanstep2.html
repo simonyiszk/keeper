@@ -6,13 +6,35 @@
     <meta charset="UTF-8">
     <title>Eszközök</title>
 </head>
-<body>
+<body onload="semcurrentpage=0;loadUsers(0)">
 
 <div th:replace="wireframe :: header"></div>
 
 
 <div class="container">
+    <script defer type="text/javascript" th:src="@{~/static/userSearch.js}"></script>
+
     <h1 th:text="${device.getName()+' kiadása'}">Lyukrepesztő análfúró kiadása</h1>
+
+    <div class="form-group">
+        <label for="searchTerm">Szörcs</label>
+        <div class="contanier" style="display: flex;">
+            <input type="email" class="form-control" id="searchTerm"
+                   placeholder="Szeberényi Imre" onkeyup="loadUsers(semcurrentpage)">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Plebejus/oldal
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button" onclick="setItemsPerPage('5')">5</button>
+                    <button class="dropdown-item" type="button" onclick="setItemsPerPage('10')">10</button>
+                    <button class="dropdown-item" type="button" onclick="setItemsPerPage('20')">20</button>
+                    <button class="dropdown-item" type="button" onclick="setItemsPerPage('50')">50</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
@@ -21,24 +43,15 @@
             <th scope="col">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
-        <tr th:each="element: ${users}" th:classappend="${element.getId() == session.user.getId()} ? table-success ">
-            <th th:text="${element.getEmail()}">alma@alma.com</th>
-            <td>
-                <span th:text="${element.getFullName()}">Lakatos Dezső</span>
-                <span style="font-style: italic;" th:if="${element.getNote()}">
-                    <br/>
-                    Note:
-                    <span th:text="${element.getNote()}">Valami jegyzet</span>
-                </span>
-            </td>
-            <td>
-                <a th:href="${'/loan/new/'+device.getId()+'/'+element.getId()}">
-                    <button type="button" class="btn btn-success">Gib</button>
-                </a>
-            </td>
-        </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" id="prevbutton"><a class="page-link" onclick="if (!semfirst) loadUsers(--semcurrentpage)">Previous</a></li>
+            <li class="page-item"><a class="page-link" id="pageCount"> Alma </a> </li>
+            <li class="page-item" id="nextbutton"><a class="page-link" onclick="if (!semlast) loadUsers(++semcurrentpage)">Next</a></li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

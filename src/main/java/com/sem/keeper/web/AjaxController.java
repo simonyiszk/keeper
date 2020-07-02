@@ -69,6 +69,15 @@ public class AjaxController {
         return devices.findByNameContainingIgnoreCase(term, pageable);
     }
 
+    @GetMapping("/usersearch/{pageNumber}/{pageSize}")
+    public Page<UserEntity> searchUser(@RequestParam String term,
+                                           @PathVariable Optional<Integer> pageNumber,
+                                           @PathVariable Optional<Integer> pageSize){
+        Integer page = pageNumber.orElse(0);
+        var pageable = PageRequest.of(page,pageSize.orElse(10));
+        return userRepository.findByFirstNameContainingOrLastNameContainingIgnoreCase(term, term, pageable);
+    }
+
     @GetMapping(value = {"/loanlist","/loanlist/{pageNumber}/{pageSize}"})
     public Page<LoanEntity> loanlist(HttpSession session,
                                      @RequestParam Optional<String> filter,
