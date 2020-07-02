@@ -11,10 +11,22 @@ function makeBars() {
         let taken = Date.parse(rows[i].dataset['taken'])
         let deadline = Date.parse(rows[i].dataset['deadline'])
         let now = Date.now()
-        let percent=((now-taken)/(deadline-taken)*100)+"%"
-        theProgress.style.width=percent
+        let percent=((now-taken)/(deadline-taken)*100)
+        theProgress.style.width=percent+"%"
         let theTr=document.createElement("tr")
         let theTd=document.createElement("td")
+        switch (((percent>75)+(percent>90)+(percent>100))) {
+            case 3:
+                theProgress.classList.add("bg-dark")
+                theTr.classList.add("table-danger")
+                break;
+            case 2:
+                theProgress.classList.add("bg-danger")
+                break;
+            case 1:
+                theProgress.classList.add("bg-warning")
+                break;
+        }
         theTr.title=`Elvitte: ${moment(rows[i].dataset['taken']).format('YYYY-MM-DD hh:mm')}<br>Határidő: ${moment(rows[i].dataset['deadline']).format('YYYY-MM-DD hh:mm')}<br>${parseInt(percent)}%`
         theTr.dataset['placement']="auto"
         theTr.dataset['html']="true"
