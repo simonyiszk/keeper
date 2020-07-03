@@ -15,15 +15,16 @@
 
     <form th:action="@{__${#httpServletRequest.requestURI}__}" enctype="utf8" method="post">
         <div class="jumbotron">
-            <h1 class="display-4" th:text="${device.getName()+' kiadása'}">Eszköz kiadása</h1>
-            <p class="lead" style="text-align: right" th:text="${tarhauser.getFullName()+' felhasználónak'}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <h1 class="display-4" th:text="#{newLoan.deviceName(${device.getName()})}">Eszköz kiadása</h1>
+            <p class="lead" style="text-align: right" th:text="#{newLoanStep3.toUser(${tarhauser.getFullName()})}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
             <div style="text-align: right" th:if="${tarhauser.getNote()?.length()>0}">
                 <i style="text-align: right" th:text="${'('+tarhauser.getNote()+')'}"></i>
             </div>
             <hr class="my-4">
             <div class="form-group">
-                <label for="note" id="noteHelp">Kölcsönzés note</label>
-                <input type="text" class="form-control" id="note" aria-describedby="noteHelp" name="note" placeholder="Eltörte xd">
+                <label for="note" id="noteHelp" th:text="#{loan.loanNote}">Kölcsönzés note</label>
+                <input type="text" class="form-control" id="note" aria-describedby="noteHelp"
+                       name="note" placeholder="Eltörte xd" th:placeholder="#{loan.loanNotePlaceholder}">
             </div>
             <p class="lead">
                 <button type="submit" class="btn btn-success btn-lg">

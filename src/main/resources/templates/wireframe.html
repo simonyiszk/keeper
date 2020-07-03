@@ -20,11 +20,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/hu.min.js" integrity="sha256-ZFHYxSxlzaE7+m3R50XGo+HzADaYSfZkRBhX09UEZro=" crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{~/static/dateReplacer.js}"></script>
     <script defer type="text/javascript" th:src="@{~/static/barGenerator.js}"></script>
-    <script>
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
 </head>
 <body>
 
@@ -42,26 +37,26 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Home</a>
+                    <a class="nav-link" th:href="@{/}" th:text="#{navBar.home}">Home</a>
                 </li>
                 <li class="nav-item" th:if="${session.user !=null and session.user.getRoles().contains('ROLE_MEMBER')}">
-                    <a class="nav-link" href="/admin">Csanád részleg</a>
+                    <a class="nav-link" href="/admin" th:text="#{navBar.admin}">Csanád részleg</a>
                 </li>
                 <li class="nav-item" th:if="${session.user !=null and session.user.getRoles().contains('ROLE_USER')}">
-                    <a class="nav-link" href="/profile">Kikölcsönzött cuccaim</a>
+                    <a class="nav-link" href="/profile" th:text="#{navBar.profile}">Kikölcsönzött cuccaim</a>
                 </li>
                 <li class="nav-item" th:if="${session.user !=null and session.user.isKiadhat()}">
-                    <a class="nav-link" href="/loan/list">Kint lévő cuccok</a>
+                    <a class="nav-link" href="/loan/list" th:text="#{navBar.stuffOut}">Kint lévő cuccok</a>
                 </li>
                 <li class="nav-item" th:if="${session.user !=null and session.user.isKiadhat()}">
-                    <a class="nav-link" href="/loanrequest">Requestek<span th:if="${loanReqCnt}" th:text="${loanReqCnt}" class="badge badge-primary">4</span></a>
+                    <a class="nav-link" href="/loanrequest"><span th:text="#{navBar.requests}">Requestek</span><span th:if="${loanReqCnt}" th:text="${loanReqCnt}" class="badge badge-primary">4</span></a>
                 </li>
                 <li class="nav-item" th:if="${session.user} == null">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/login" th:text="#{navBar.login}">Login</a>
                 </li>
                 <li class="nav-item" th:unless="${session.user} == null">
                     <a class="nav-link" href="/logout"
-                       th:text="${'Log out from '+session.user.getFullName()}">Log out</a>
+                       th:utext="#{navBar.logout(${session.user.getFullName()})}">Log out</a>
                 </li>
             </ul>
         </div>

@@ -16,11 +16,11 @@
 
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">Eszköz</th>
-            <th scope="col">Kölcsönző</th>
-            <th scope="col">Kiadó</th>
-            <th scope="col">Note</th>
-            <th scope="col">Dógok</th>
+            <th scope="col" th:text="#{loanList.device}">Eszköz</th>
+            <th scope="col" th:text="#{loanList.takeUser}">Kölcsönző</th>
+            <th scope="col" th:text="#{loanList.giveUser}">Kiadó</th>
+            <th scope="col" th:text="#{loanList.note}">Note</th>
+            <th scope="col" th:text="#{loanList.manage}">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr class="plstimebar" th:id="${'loan'+element.getId()}"
@@ -32,10 +32,10 @@
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
             <td th:text="${{element.getNote()}}">Mark</td>
             <td>
-                <a th:href="${'/loan/return/'+element.getId()}" class="btn btn-success">
+                <a th:href="${'/loan/return/'+element.getId()}" class="btn btn-success" th:text="#{loanList.takeBack}">
                     Visszavesz
                 </a>
-                <a class="btn btn-warning" th:href="${'/loan/extend/'+element.getId()}">
+                <a class="btn btn-warning" th:href="${'/loan/extend/'+element.getId()}" th:text="#{loanList.extend}">
                     Hosszabbít
                 </a>
             </td>

@@ -9,31 +9,31 @@
 <div class="container">
     <form action="/" enctype="utf8" method="POST" th:action="@{${backUrl}}" th:object="${newdevice}">
         <div class="form-group">
-            <label>Neve</label>
+            <label th:text="#{newDevice.name}">Neve</label>
             <input class="form-control" th:field="*{name}"/>
             <p th:each="error: ${#fields.errors('name')}"
                th:text="${error}">Validation error</p>
         </div>
         <div class="form-group">
-            <label>Leírás</label>
+            <label th:text="#{newDevice.description}">Leírás</label>
             <input class="form-control" th:field="*{description}"/>
             <p th:each="error : ${#fields.errors('description')}"
                th:text="${error}">Validation error</p>
         </div>
         <div class="form-group">
-            <label>RFID tag (nem kötelező)</label>
+            <label th:text="#{newDevice.rfid}">RFID tag (nem kötelező)</label>
             <input class="form-control" th:field="*{rfid}"/>
             <p th:each="error : ${#fields.errors('rfid')}"
                th:text="${error}">Validation error</p>
         </div>
         <div class="form-group">
-            <label>Vonalkód (nem kötelező)</label>
+            <label th:text="#{newDevice.barcode}">Vonalkód (nem kötelező)</label>
             <input class="form-control" th:field="*{barcode}"/>
             <p th:each="error : ${#fields.errors('barcode')}"
                th:text="${error}">Validation error</p>
         </div>
-        <button class="btn btn-success" type="submit">zsa</button>
-        <button class="btn btn-link" type="button" onclick="window.history.back()">Cancel</button>
+        <button class="btn btn-success" type="submit" th:text="#{newDevice.ok}">zsa</button>
+        <button class="btn btn-link" type="button" onclick="window.history.back()" th:text="#{newDevice.cancel}">Cancel</button>
     </form>
 </div>
 

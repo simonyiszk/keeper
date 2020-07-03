@@ -14,16 +14,16 @@
 <div class="container">
     <script defer type="text/javascript" th:src="@{~/static/userSearch.js}"></script>
 
-    <h1 th:text="${device.getName()+' kiadása'}">Lyukrepesztő análfúró kiadása</h1>
+    <h1 th:text="#{newLoan.deviceName(${device.getName()})}">Lyukrepesztő análfúró kiadása</h1>
 
     <div class="form-group">
-        <label for="searchTerm">Szörcs</label>
+        <label for="searchTerm" th:text="#{newLoanStep2.search}">Szörcs</label>
         <div class="contanier" style="display: flex;">
             <input type="email" class="form-control" id="searchTerm"
-                   placeholder="Szeberényi Imre" onkeyup="loadUsers(semcurrentpage)">
+                   placeholder="Szeberényi Imre" th:placeholder="#{newLoanStep2.placeholder}" onkeyup="loadUsers(semcurrentpage)">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{newLoanStep2.userPerPge}">
                     Plebejus/oldal
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -38,18 +38,18 @@
 
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">Email</th>
-            <th scope="col">User</th>
-            <th scope="col">Actions</th>
+            <th scope="col" th:text="#{newLoanStep2.email}">Email</th>
+            <th scope="col" th:text="#{newLoanStep2.user}">User</th>
+            <th scope="col" th:text="#{newLoanStep2.action}">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         </tbody>
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item" id="prevbutton"><a class="page-link" onclick="if (!semfirst) loadUsers(--semcurrentpage)">Previous</a></li>
+            <li class="page-item" id="prevbutton"><a th:text="#{pagination.previous}" class="page-link" onclick="if (!semfirst) loadUsers(--semcurrentpage)">Previous</a></li>
             <li class="page-item"><a class="page-link" id="pageCount"> Alma </a> </li>
-            <li class="page-item" id="nextbutton"><a class="page-link" onclick="if (!semlast) loadUsers(++semcurrentpage)">Next</a></li>
+            <li class="page-item" id="nextbutton"><a th:text="#{pagination.next}" class="page-link" onclick="if (!semlast) loadUsers(++semcurrentpage)">Next</a></li>
         </ul>
     </nav>
 </div>

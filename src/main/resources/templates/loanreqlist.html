@@ -16,9 +16,9 @@
 
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">Eszköz</th>
-            <th scope="col">Tarháló</th>
-            <th scope="col">Dógok</th>
+            <th scope="col" th:text="#{loanReqList.device}">Eszköz</th>
+            <th scope="col" th:text="#{loanReqList.requester}">Tarháló</th>
+            <th scope="col" th:text="#{loanReqList.manage}">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${requests}">

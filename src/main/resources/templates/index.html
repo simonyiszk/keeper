@@ -16,19 +16,19 @@
     <h1 th:text="${message}"></h1>
 </div>
 <div class="container" th:if="${session.user} == null">
-    Helló diló! Jelentkezz be léccy<br>
-    <a href="/login" ><button type="button" class="btn btn-primary">Na jó</button></a>
-    <a href="/user/registration" ><button type="button" class="btn btn-primary">Regelési</button></a>
+    <span th:text="#{index.signInPls}">Helló diló! Jelentkezz be léccy</span><br>
+    <a href="/login" ><button type="button" class="btn btn-primary" th:text="#{index.signIn}">Na jó</button></a>
+    <a href="/user/registration" ><button type="button" class="btn btn-primary" th:text="#{index.signUp}">Regelési</button></a>
 </div>
 <div class="container" th:if="${session.user} != null and ${session.user?.getRoles()?.contains('ROLE_USER')}">
         <div class="form-group">
-            <label for="searchTerm">Szörcs</label>
+            <label for="searchTerm" th:text="#{index.search}">Szörcs</label>
             <div class="contanier" style="display: flex;">
                 <input type="email" class="form-control" id="searchTerm"
-                       placeholder="Krumplipucoló" onkeyup="loaddevicesroot(semcurrentpage,'10')">
+                       placeholder="Krumplipucoló" th:placeholder="#{index.searchPlaceholder}" onkeyup="loaddevicesroot(semcurrentpage,'10')">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{index.devicePerPage}">
                         Cuccos/oldal
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -43,10 +43,10 @@
     <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
-            <th scope="col">Név</th>
-            <th scope="col">Leírás</th>
-            <th scope="col">Kölcsönzés</th>
-            <th scope="col" th:if="${session.user !=null and session.user.isKiadhat()}">Kezelés</th>
+            <th scope="col" th:text="#{index.name}">Név</th>
+            <th scope="col" th:text="#{index.description}">Leírás</th>
+            <th scope="col" th:text="#{index.loan}">Kölcsönzés</th>
+            <th scope="col" th:text="#{index.manage}" th:if="${session.user !=null and session.user.isKiadhat()}">Kezelés</th>
         </tr>
         </thead>
         <tbody id="tablebody">
@@ -55,22 +55,25 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item" id="prevbutton"><a class="page-link" onclick="if (!semfirst) loaddevicesroot(--semcurrentpage, '10')">Previous</a></li>
-            <li class="page-item"><a class="page-link" id="pageCount"> Alma </a> </li>
-            <li class="page-item" id="nextbutton"><a class="page-link" onclick="if (!semlast) loaddevicesroot(++semcurrentpage, '10')">Next</a></li>
+            <li class="page-item" id="prevbutton">
+                <a class="page-link" th:text="#{pagination.previous}"
+                   onclick="if (!semfirst) loaddevicesroot(--semcurrentpage, '10')">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" id="pageCount"> Alma </a>
+            </li>
+            <li class="page-item" id="nextbutton">
+                <a class="page-link" th:text="#{pagination.next}"
+                   onclick="if (!semlast) loaddevicesroot(++semcurrentpage, '10')">Next</a>
+            </li>
         </ul>
     </nav>
 
     <br/>
-    <a href="/device/new" class="btn btn-block btn-primary" th:if="${session.user !=null and session.user.isKiadhat()}">Új eszköz hozzáadása</a>
+    <a href="/device/new" class="btn btn-block btn-primary" th:text="#{index.newDevice}" th:if="${session.user !=null and session.user.isKiadhat()}">Új eszköz hozzáadása</a>
 
     <span th:text="${'Verzió:'+@environment.getProperty('git.commit.id.abbrev')+': '+@environment.getProperty('git.commit.message.short')}"></span>
 
 </div>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

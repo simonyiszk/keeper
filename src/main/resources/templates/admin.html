@@ -15,17 +15,17 @@
     <div class="d-flex flex-column">
         <div class="p-2">
             <a href="admin/users">
-                <button type="button" class="btn btn-success">User kezelés</button>
+                <button type="button" th:text="#{admin.userManagement}" class="btn btn-success">User kezelés</button>
             </a>
         </div>
         <div class="p-2">
             <a href="loan/list/all">
-                <button type="button" class="btn btn-success">Összes kölcsönzés</button>
+                <button type="button" th:text="#{admin.allLoans}" class="btn btn-success">Összes kölcsönzés</button>
             </a>
         </div>
         <div class="p-2">
             <a th:href="${musicUrl}">
-                <button type="button" class="btn btn-success">Random kiválasztott jó zene</button>
+                <button type="button" th:text="#{admin.music}" class="btn btn-success">Random kiválasztott jó zene</button>
             </a>
         </div>
     </div>

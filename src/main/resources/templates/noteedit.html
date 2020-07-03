@@ -9,10 +9,12 @@
 <div class="container">
     <form action="/" enctype="utf8" method="POST" th:action="@{${backUrl}}" th:object="${toEdit}">
         <div class="form-group">
-            <label>Jegyzet <b th:text="${toEdit.getFullName()}">Lakatos Géza</b> felhasználóhoz</label>
+            <label th:utext="#{noteEdit.forUser(${toEdit.getFullName()},${toEdit.getEmail()})}">Jegyzet <b th:text="${toEdit.getFullName()}">Lakatos Géza</b> felhasználóhoz</label>
             <textarea class="form-control" rows="3" th:field="*{note}"></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">zsa</button>
+        <button class="btn btn-primary" type="submit" th:text="#{noteEdit.ok}">zsa</button>
+        <button class="btn btn-link" type="button" onclick="window.history.back()" th:text="#{noteEdit.cancel}">Cancel</button>
+
     </form>
 </div>
 
