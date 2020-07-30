@@ -13,8 +13,8 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead><tr>
-            <th scope="col">Eszköz</th>
-            <th scope="col">Leírás</th>
+            <th scope="col" th:text="#{profile.device}">Eszköz</th>
+            <th scope="col" th:text="#{profile.description}">Leírás</th>
         </tr></thead>
         <tbody id="tablebody">
         <tr th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"

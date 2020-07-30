@@ -13,9 +13,9 @@
 <div class="container">
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Note</th>
-            <th scope="col">Actions</th>
+            <th scope="col" th:text="#{userList.email}">Email</th>
+            <th scope="col" th:text="#{userList.note}">Note</th>
+            <th scope="col" th:text="#{userList.actions}">Actions</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${users}" th:classappend="${element.isKiadhat()} ? table-success ">
@@ -23,16 +23,24 @@
             <td th:text="${element.getNote()}">Mark</td>
             <td>
                 <a th:href="${'/user/editnote/'+element.getId()}">
-                    <button type="button" class="btn btn-primary">Jegyzet szerkesztése</button>
+                    <button type="button" class="btn btn-primary" th:text="#{userList.editNote}">
+                        Jegyzet szerkesztése
+                    </button>
                 </a>
                 <a th:href="@{makemember(useremail=${element.getEmail()})}" th:if="${!element.isKiadhat()}">
-                    <button type="button" class="btn btn-success">Taggá kijelölés</button>
+                    <button type="button" class="btn btn-success" th:text="#{userList.member}">
+                        Taggá kijelölés
+                    </button>
                 </a>
                 <a th:href="@{unmakemember(useremail=${element.getEmail()})}" th:if="${element.isKiadhat()}">
-                    <button type="button" class="btn btn-warning">Nem tag</button>
+                    <button type="button" class="btn btn-warning" th:text="#{userList.noMember}">
+                        Nem tag
+                    </button>
                 </a>
                 <a th:href="@{deleteuser(useremail=${element.getEmail()})}">
-                    <button type="button" class="btn btn-danger">Törlés</button>
+                    <button type="button" class="btn btn-danger" th:text="#{userList.delete}">
+                        Törlés
+                    </button>
                 </a>
             </td>
         </tr>

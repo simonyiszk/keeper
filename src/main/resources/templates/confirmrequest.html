@@ -11,7 +11,7 @@
 <div th:replace="wireframe :: header"></div>
 
 <div class="container" th:unless="${session.user.getRoles().contains('ROLE_MEMBER')}">
-    <h1 th:text="${device.getName()+' rekvesztálása'}">Lyukrepesztő análfúró kunyizása</h1>
+    <h1 th:text="#{confirmRequest.request(${device.getName()})}">Lyukrepesztő análfúró kunyizása</h1>
 
     <a th:href="@{__${#httpServletRequest.requestURI}__/ok}" class="btn btn-success">
         <i class="fas fa-check"></i>
