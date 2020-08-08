@@ -32,24 +32,6 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/makemember")
-    public RedirectView makeMember(@RequestParam String useremail){
-        UserEntity user = userRepository.findByEmail(useremail);
-        if(user != null){
-            userService.makeMember(user);
-        }
-        return new RedirectView("/admin/users");
-    }
-
-    @GetMapping("/unmakemember")
-    public RedirectView unMakeMember(@RequestParam String useremail){
-        UserEntity user = userRepository.findByEmail(useremail);
-        if(user != null){
-            userService.unMakeMember(user);
-        }
-        return new RedirectView("/admin/users");
-    }
-
     @GetMapping("/deleteuser")
     public RedirectView deleteuser(@RequestParam String useremail){
         UserEntity user = userRepository.findByEmail(useremail);

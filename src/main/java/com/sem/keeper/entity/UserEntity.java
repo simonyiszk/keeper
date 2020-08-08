@@ -1,6 +1,7 @@
 package com.sem.keeper.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import hu.gerviba.authsch.struct.CardType;
 import lombok.*;
 import org.hibernate.annotations.Proxy;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity implements Serializable {
 
@@ -21,36 +23,17 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String authSchId;
+
     /**
      * Felhasználó vezetékneve
      */
-    private String firstName;
-
-    /**
-     * Felhasználó keresztneve
-     */
-    private String lastName;
-
-    /**
-     * A felhasználó kiadhat-e eszközöket
-     */
-    private boolean kiadhat;
+    private String fullName;
 
     /**
      * A felhasznéáló e-mailcíme
      */
     private String email;
-
-    /**
-     * A felhasználónév, későbbi felhasználásra
-     */
-    private String username;
-
-    /**
-     * Debug célokra ide néha beírtam cleartextben a jelszót, élesben nem lesz benne
-     */
-    @JsonIgnore
-    private String auth_string;
 
     /**
      * Felhasználó jelszava, bcrypt hash formájában
@@ -62,6 +45,8 @@ public class UserEntity implements Serializable {
      * Felhasználó szobája. String kell, mert VPK-ban betűk is vannak benne
      */
     private String room;
+
+    private String phoneNo;
 
     /**
      * Role-ok a spring security számára
@@ -76,15 +61,8 @@ public class UserEntity implements Serializable {
     @JsonIgnore
     private boolean valid;
 
-    /**
-     * Kényelmi függvény, hogy ne kelljen annyit írni a template-ekben
-     * @return
-     */
     @JsonIgnore
-    public String getFullName(){
-        return firstName+' '+lastName;
-    }
-
+    private CardType cardType = CardType.DO;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
@@ -95,4 +73,16 @@ public class UserEntity implements Serializable {
     private Collection<LoanEntity> loanEntities;
 
     private String note;
+
+    public boolean isKiadhat(){
+        return roles.contains("ROLE_MEMBER");
+    }
+
+    public void setKiadhat(boolean value){
+        if (value){
+            roles.add("ROLE_MEMBER");
+        } else {
+            roles.remove("ROLE_MEMBER");
+        }
+    }
 }

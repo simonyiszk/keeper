@@ -17,8 +17,7 @@
 </div>
 <div class="container" th:if="${session.user} == null">
     <span th:text="#{index.signInPls}">Helló diló! Jelentkezz be léccy</span><br>
-    <a href="/login" ><button type="button" class="btn btn-primary" th:text="#{index.signIn}">Na jó</button></a>
-    <a href="/user/registration" ><button type="button" class="btn btn-primary" th:text="#{index.signUp}">Regelési</button></a>
+    <a href="/authSchLogin"><button type="button" class="btn btn-primary" th:text="#{index.signIn}">Na jó</button></a>
 </div>
 <div class="container" th:if="${session.user} != null and ${session.user?.getRoles()?.contains('ROLE_USER')}">
         <div class="form-group">

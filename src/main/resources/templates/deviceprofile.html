@@ -75,7 +75,7 @@
                 <th scope="col" th:text="#{deviceProfile.backDate}">Visszahozta</th>
                 <th scope="col" th:text="#{deviceProfile.note}">Note</th>
             </tr></thead>
-            <tbody id="tablebody">
+            <tbody id="tablebody" th:if="${device?.getLoanEntities()?.size()>0}">
             <tr th:each="element: ${device.getLoanEntities()}" th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
                 th:classappend="${element.getBackDateReal()} ? '':'plstimebar'">
                 <td th:text="${{element.getElvitte().getFullName()}}">alma</td>
