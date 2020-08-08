@@ -9,12 +9,10 @@ import com.sem.keeper.repo.LoanRepository;
 import com.sem.keeper.repo.LoanRequestRepository;
 import com.sem.keeper.repo.UserRepository;
 import com.sem.keeper.service.LoanService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -75,7 +72,7 @@ public class AjaxController {
                                            @PathVariable Optional<Integer> pageSize){
         Integer page = pageNumber.orElse(0);
         var pageable = PageRequest.of(page,pageSize.orElse(10));
-        return userRepository.findByFirstNameContainingOrLastNameContainingIgnoreCase(term, term, pageable);
+        return userRepository.findByFullNameContainingIgnoreCase(term, pageable);
     }
 
     @GetMapping(value = {"/loanlist","/loanlist/{pageNumber}/{pageSize}"})

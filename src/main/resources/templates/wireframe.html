@@ -52,7 +52,7 @@
                     <a class="nav-link" href="/loanrequest"><span th:text="#{navBar.requests}">Requestek</span><span th:if="${loanReqCnt}" th:text="${loanReqCnt}" class="badge badge-primary">4</span></a>
                 </li>
                 <li class="nav-item" th:if="${session.user} == null">
-                    <a class="nav-link" href="/login" th:text="#{navBar.login}">Login</a>
+                    <a class="nav-link" href="/authSchLogin" th:text="#{navBar.authSchLogin}">Login</a>
                 </li>
                 <li class="nav-item" th:unless="${session.user} == null">
                     <a class="nav-link" href="/logout"

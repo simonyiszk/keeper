@@ -88,7 +88,7 @@ public class DeviceController {
         model.addAttribute("device", deviceEntity);
 
         LoanEntity lastLoan = loanRepository.findFirstByDeviceEntityOrderByTakeDateDesc(deviceEntity);
-        model.addAttribute("lastloanid", lastLoan.getId());
+        if (lastLoan!=null) model.addAttribute("lastloanid", lastLoan.getId());
         return "deviceprofile";
     }
 

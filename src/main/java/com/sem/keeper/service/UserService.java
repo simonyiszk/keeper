@@ -3,6 +3,7 @@ package com.sem.keeper.service;
 import com.sem.keeper.model.UserRegDto;
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.UserRepository;
+import hu.gerviba.authsch.struct.CardType;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,10 @@ public class UserService {
         //repository.save(userEntity);
     }
 
+    public void updateCard(UserEntity user, CardType card){
+        user.setCardType(card);
+    }
+
     public void deleteUser(UserEntity userEntity){
         repository.delete(userEntity);
     }
@@ -50,9 +55,7 @@ public class UserService {
 
         UserEntity user = new UserEntity();
 
-        user.setFirstName(userRegDto.getFirstName());
-        user.setLastName(userRegDto.getLastName());
-
+        user.setFullName(userRegDto.getFirstName()+" "+userRegDto.getLastName());
 
         user.setPassword(pe.encode(userRegDto.getPassword()));
         user.setEmail(userRegDto.getEmail());
