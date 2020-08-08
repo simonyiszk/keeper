@@ -110,7 +110,6 @@ public class AuthSchController {
                 user = userRepository.save(user);
                 user.setAuthSchId(profile.getInternalId().toString());
                 user.setFullName(profile.getDisplayName());
-                user.setKiadhat(false);
                 user.setEmail(profile.getMail());
                 user.setValid(true);
                 user.setCardType(card);
@@ -121,6 +120,7 @@ public class AuthSchController {
                                 .findFirst();
                 ArrayList<String> roles = new ArrayList<>();
                 roles.add("ROLE_USER");
+                user.setKiadhat(false);
                 if (SEMMembership.isPresent()) {
                     if (!SEMMembership.get().getTitle().contains("újonc")){
                         roles.add("ROLE_MEMBER");
