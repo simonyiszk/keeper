@@ -119,6 +119,7 @@ public class AuthSchController {
                                 .filter(e->e.getId()==342)
                                 .findFirst();
                 ArrayList<String> roles = new ArrayList<>();
+                user.setRoles(roles);
                 roles.add("ROLE_USER");
                 if (SEMMembership.isPresent()) {
                     if (!SEMMembership.get().getTitle().contains("újonc")){
@@ -127,7 +128,6 @@ public class AuthSchController {
                     }
                 }
 
-                user.setRoles(roles);
                 user.setKiadhat(false);
                 user=userRepository.save(user);
                 auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(user));
