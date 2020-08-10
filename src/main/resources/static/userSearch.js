@@ -12,7 +12,7 @@ async function loadUsers(page) {
         neu.appendChild(document.createElement("td"))
         neu.children[0].innerText = user.email
         neu.children[1].appendChild(document.createElement("span"))
-        neu.children[1].children[0].innerText = user.firstName + " " + user.lastName
+        neu.children[1].children[0].innerText = user.fullName
         if (user.id === userid)
             neu.classList.add("table-success")
         if (user.note) {
