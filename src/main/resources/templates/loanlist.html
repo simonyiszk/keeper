@@ -27,7 +27,9 @@
             th:each="element: ${loans}"
             th:classappend="${element.isLate()} ? table-danger "
             th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}">
-            <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
+            <th>
+                <a th:text="${element.getDeviceEntity().getName()}" th:href="${'/device/'+element.getDeviceEntity().getId()}"></a>
+            </th>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
             <td th:text="${{element.getNote()}}">Mark</td>

@@ -24,7 +24,9 @@
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${loans}">
-            <th th:text="${element.getDeviceEntity().getName()}">Mark</td>
+            <th>
+                <a th:text="${element.getDeviceEntity().getName()}" th:href="${'/device/'+element.getDeviceEntity().getId()}"></a>
+            </th>
             <td th:text="${element.getElvitte().getFullName()}">Mark</td>
             <td th:text="${element.getKiadta().getFullName()}">Mark</td>
             <td th:text="${element.getVisszavette()?.getFullName()}">Mark</td>
