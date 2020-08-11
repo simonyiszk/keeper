@@ -23,7 +23,9 @@
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${requests}">
-            <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
+            <th>
+                <a th:text="${element.getDeviceEntity().getName()}" th:href="${'/device/'+element.getDeviceEntity().getId()}"></a>
+            </th>
             <th class="replace" th:text="${element.getCreationDate()}">Mark</th>
             <td>
                 <span th:text="${element.getElvinne().getFullName()}">Lakatos Győző</span>

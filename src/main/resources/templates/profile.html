@@ -17,12 +17,14 @@
             <th scope="col" th:text="#{profile.description}">Leírás</th>
         </tr></thead>
         <tbody id="tablebody">
-        <tr th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
-            th:classappend="${element.getBackDateReal()} ? 'table-secondary':'plstimebar'" th:each="element: ${loans}">
-            <th th:text="${element.getDeviceEntity().getName()}">Árvíztűrő tükörfúrógép</th>
-            <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
+            <tr th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
+                th:classappend="${element.getBackDateReal()} ? 'table-secondary':'plstimebar'" th:each="element: ${loans}">
+                <th>
+                    <a th:text="${element.getDeviceEntity().getName()}" th:href="${'/device/'+element.getDeviceEntity().getId()}"></a>
+                </th>
+                <td th:text="${element.getDeviceEntity().getDescription()}">Alma</td>
 
-        </tr>
+            </tr>
         </tbody>
     </table>
 </div>
