@@ -76,20 +76,21 @@
                 <th scope="col" th:text="#{deviceProfile.note}">Note</th>
             </tr></thead>
             <tbody id="tablebody" th:if="${device?.getLoanEntities()?.size()>0}">
-            <tr th:each="element: ${device.getLoanEntities()}" th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
-                th:classappend="${element.getBackDateReal()} ? '':'plstimebar'">
-                <td th:text="${{element.getElvitte().getFullName()}}">alma</td>
-                <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
-                <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
-                <td th:text="${{element.getBackDateReal()}}" class="replace">alma</td>
-                <td style="display:flex; flex-direction:row;">
-                    <p th:id="${element.getId()+'p'}" th:text="${{element.getNote()}}" style="margin: auto">A felét vitte el</p>
-                    <button th:id="${element.getId()+'btn'}" class="btn btn-success btn-sm" style="margin-left: auto" onclick="wunderedit(this.id);return 1;">
-                        <i class="fas fa-pen" aria-hidden="true"></i>
-                    </button>
-                </td>
-
-            </tr>
+                <tr th:each="i: ${#numbers.sequence(device.getLoanEntities().size()-1,0,-1)}"
+                    th:with="element=${device.getLoanEntities().get(i)}"
+                    th:attrappend="data-taken=${element.getTakeDate()},data-deadline=${element.getBackDatePlanned()}"
+                    th:classappend="${element.getBackDateReal()} ? '':'plstimebar'">
+                    <td th:text="${{element.getElvitte().getFullName()}}">alma</td>
+                    <td th:text="${{element.getTakeDate()}}" class="replace">alma</td>
+                    <td th:text="${{element.getBackDatePlanned()}}" class="replace">alma</td>
+                    <td th:text="${{element.getBackDateReal()}}" class="replace">alma</td>
+                    <td style="display:flex; flex-direction:row;">
+                        <p th:id="${element.getId()+'p'}" th:text="${{element.getNote()}}" style="margin: auto">A felét vitte el</p>
+                        <button th:id="${element.getId()+'btn'}" class="btn btn-success btn-sm" style="margin-left: auto" onclick="wunderedit(this.id);return 1;">
+                            <i class="fas fa-pen" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
