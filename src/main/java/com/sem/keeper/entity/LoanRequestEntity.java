@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class LoanRequestEntity {
     }))
     @ManyToOne(fetch = FetchType.LAZY)
     private DeviceEntity deviceEntity;
+
+    private LocalDateTime creationDate;
 
     public LoanRequestEntity(UserEntity userEntity, DeviceEntity deviceEntity){
         elvinne=userEntity;
