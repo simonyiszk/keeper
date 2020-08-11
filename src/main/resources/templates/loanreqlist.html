@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>alma</title>
 </head>
-<body>
+<body onload="replaceDatesWithNiceStuff()">
 
 <div th:replace="wireframe :: header"></div>
 
@@ -17,12 +17,14 @@
     <table class="table table-hover table-bordered table-striped">
         <thead> <tr>
             <th scope="col" th:text="#{loanReqList.device}">Eszköz</th>
+            <th scope="col" th:text="#{loanReqList.creationDate}">Létrejött</th>
             <th scope="col" th:text="#{loanReqList.requester}">Tarháló</th>
             <th scope="col" th:text="#{loanReqList.manage}">Dógok</th>
         </tr> </thead>
         <tbody id="tablebody">
         <tr th:each="element: ${requests}">
             <th th:text="${element.getDeviceEntity().getName()}">Mark</th>
+            <th class="replace" th:text="${element.getCreationDate()}">Mark</th>
             <td>
                 <span th:text="${element.getElvinne().getFullName()}">Lakatos Győző</span>
                 <span style="font-style: italic;" th:if="${element.getElvinne().getNote()}">
