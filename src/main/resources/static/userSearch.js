@@ -23,7 +23,7 @@ async function loadUsers(page) {
         }
         let button = {
             id: undefined,
-            text: "Gib",
+            text: "Kölcsönad",
             link: `${window.location.href}/${user.id}`,
             class: "btn-success",
             parent: neu.children[2],

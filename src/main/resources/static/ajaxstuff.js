@@ -87,8 +87,8 @@ async function loaddevicesroot(page) {
 
         if (admin){
             buttons=[
-                {id: device.id, text:"Gib", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0], disableifout:true},
-                {id: device.id, text:"Yoink",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0], disableifout:true},
+                {id: device.id, text:"Kölcsönadom", link:`/loan/new/${device.id}`, class:"btn-primary", parent:neu.children[2].children[0], disableifout:true},
+                {id: device.id, text:"Visszahozta",link:`/loan/new/${device.id}/${userid}`, class: "btn-success", parent:neu.children[2].children[0], disableifout:true},
                 {id: device.id, i:"fa-pen",link:`/device/edit/${device.id}`, class: "btn-secondary", parent:neu.children[3].children[0], disableifout:false},
                 {id: device.id, i:"fa-trash",link:`/device/delete/${device.id}`, class: "btn-danger", parent:neu.children[3].children[0], disableifout:false}
             ]
