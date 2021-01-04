@@ -41,7 +41,7 @@ open class SecSecurityConfig(private val userDetailsService: SemUserDetailsServi
             .antMatchers("/device/**").hasRole("USER")
             .antMatchers("/profile/**").hasRole("USER")
             .antMatchers("/").permitAll()
-            .and().formLogin() //.loginPage("/authSchLogin")
+            .and().formLogin().loginPage("/authSchLogin")
             .successHandler(authenticationSuccessHandler())
             .and().logout().logoutSuccessUrl("/")
             .and().csrf().disable()
