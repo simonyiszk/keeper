@@ -1,4 +1,4 @@
-/**
+/*
     MEGA thanks to Szabó Gergely (<gerviba@gerviba.hu>) for his Webschop project
  */
 package com.sem.keeper.web;
@@ -13,22 +13,15 @@ import hu.gerviba.authsch.struct.Entrant;
 import hu.gerviba.authsch.struct.PersonEntitlement;
 import hu.gerviba.authsch.struct.Scope;
 import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -37,27 +30,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Collections.emptySet;
-
 @Controller
 public class AuthSchController {
-
-    private static final Logger log = LoggerFactory.getLogger(AuthSchController.class);
 
     static final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
     static final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
 
-    @Autowired
-    AuthSchAPI authSch;
+    private final AuthSchAPI authSch;
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public AuthSchController(AuthSchAPI authSch, UserService userService, UserRepository userRepository) {
+        this.authSch = authSch;
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/authSchLogin")
-    public String items(HttpServletRequest request, HttpSession session) {
+    public String items(HttpServletRequest request) {
         return "redirect:" + authSch.generateLoginUrl(buildUniqueState(request),
                 Scope.BASIC, Scope.DISPLAY_NAME, Scope.MAIL, Scope.ENTRANTS, Scope.EDU_PERSON_ENTILEMENT);
     }
@@ -83,7 +75,7 @@ public class AuthSchController {
 
     @GetMapping("/loggedin")
     private String loggedIn(@RequestParam String code, @RequestParam String state,
-                            HttpServletRequest request, HttpSession session) {
+                            HttpServletRequest request) {
         if (!buildUniqueState(request).equals(state))
             return "index?invalid-state";
 
@@ -160,7 +152,7 @@ public class AuthSchController {
     private CardType cardTypeLookup(ProfileDataResponse profile) {
         CardType card = CardType.DO;
         for (Entrant entrant : profile.getEntrants()) {
-            if (entrant.getEntrantType().toLowerCase().equals("kb") && card.ordinal() < CardType.KB.ordinal()) {
+            if (entrant.getEntrantType().equalsIgnoreCase("kb") && card.ordinal() < CardType.KB.ordinal()) {
                 card = CardType.KB;
             } else if (entrant.getEntrantType().matches("^[ÁáAa][Bb]$") && card.ordinal() < CardType.AB.ordinal()) {
                 card = CardType.AB;
