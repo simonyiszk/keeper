@@ -1,5 +1,6 @@
 package com.sem.keeper.web
 
+import com.sem.keeper.service.command.ChangeLoanNoteCommand
 import com.sem.keeper.entity.DeviceEntity
 import com.sem.keeper.entity.LoanEntity
 import com.sem.keeper.entity.LoanRequestEntity
@@ -104,7 +105,10 @@ class AjaxController(
             response.status = HttpServletResponse.SC_BAD_REQUEST
             return "Nein"
         }
-        loanService.editNote(loanEntity.get(), requestBody["resStr"])
-        return "Alma"
+        requestBody["resStr"]?.let {
+            loanService.editNote(ChangeLoanNoteCommand(loanEntity.get(), it))
+            return "Alma"
+        }
+        return "Nein"
     }
 }

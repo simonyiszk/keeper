@@ -1,5 +1,7 @@
 package com.sem.keeper.web
 
+import com.sem.keeper.service.command.AcceptLoanRequestCommand
+import com.sem.keeper.service.command.DenyLoanRequestCommand
 import com.sem.keeper.entity.LoanRequestEntity
 import com.sem.keeper.entity.UserEntity
 import com.sem.keeper.repo.LoanRequestRepository
@@ -38,13 +40,16 @@ class LoanRequestController(
         redirectAttributes: RedirectAttributes
     ): RedirectView {
         val toAccept = loanRequestRepository.findById(loanreqid.toLong()).get()
-        loanRequestService.accept(toAccept, user)
+        loanRequestService.accept(AcceptLoanRequestCommand(
+            loanRequestEntity = toAccept,
+            kiad = user
+        ))
         return RedirectView("/loanrequest")
     }
 
     @GetMapping("/deny/{loanreqid}")
     fun deny(@PathVariable("loanreqid") loanreqid: String): RedirectView {
-        loanRequestService.deny(loanreqid.toLong())
+        loanRequestService.deny(DenyLoanRequestCommand.of(loanreqid.toLong()))
         return RedirectView("/loanrequest")
     }
 }

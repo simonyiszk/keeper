@@ -1,6 +1,7 @@
 package com.sem.keeper.web
 
-import com.sem.keeper.command.NewDeviceCommand
+import com.sem.keeper.service.command.DeleteDeviceCommand
+import com.sem.keeper.service.command.NewDeviceCommand
 import com.sem.keeper.repo.DeviceRepository
 import com.sem.keeper.repo.LoanRepository
 import com.sem.keeper.service.DeviceService
@@ -23,7 +24,10 @@ class DeviceController(
     @GetMapping("/delete/{deviceid}")
     fun delete(@PathVariable("deviceid") deviceid: String): RedirectView {
         val device = deviceRepository.findById(deviceid.toLong()).get()
-        deviceService.deleteDevice(device)
+        val command = DeleteDeviceCommand(
+            deviceToDelete = device
+        )
+        deviceService.deleteDevice(command)
         return RedirectView("/")
     }
 

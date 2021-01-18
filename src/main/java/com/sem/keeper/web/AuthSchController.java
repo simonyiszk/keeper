@@ -6,6 +6,7 @@ package com.sem.keeper.web;
 import com.sem.keeper.entity.UserEntity;
 import com.sem.keeper.repo.UserRepository;
 import com.sem.keeper.service.UserService;
+import com.sem.keeper.service.command.UpdateCardCommand;
 import hu.gerviba.authsch.AuthSchAPI;
 import hu.gerviba.authsch.response.ProfileDataResponse;
 import hu.gerviba.authsch.struct.CardType;
@@ -92,7 +93,7 @@ public class AuthSchController {
                 auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(user));
                 CardType card = cardTypeLookup(profile);
                 if (user.getCardType() != card) {
-                    userService.updateCard(user, card);
+                    userService.updateCard(new UpdateCardCommand(user, card));
                 }
             } else {
                 CardType card = cardTypeLookup(profile);

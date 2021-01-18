@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.JsonIdentityReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator
-import com.sem.keeper.command.NewDeviceCommand
+import com.sem.keeper.service.command.NewDeviceCommand
 import java.io.Serializable
 import java.time.Duration
 import java.util.stream.Collectors

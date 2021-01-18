@@ -11,7 +11,7 @@ class GoodMusicService(
     private val goodMusicRepository: GoodMusicRepository
 ) {
 
-    private var random = Random()
+    private val random = Random()
     val nextGoodMusic: GoodMusicEntity?
         get() {
             val musicCount = goodMusicRepository.count().toInt()

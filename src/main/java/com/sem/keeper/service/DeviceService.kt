@@ -1,6 +1,7 @@
 package com.sem.keeper.service
 
-import com.sem.keeper.command.NewDeviceCommand
+import com.sem.keeper.service.command.DeleteDeviceCommand
+import com.sem.keeper.service.command.NewDeviceCommand
 import com.sem.keeper.entity.DeviceEntity
 import com.sem.keeper.repo.DeviceRepository
 import org.springframework.stereotype.Service
@@ -16,7 +17,7 @@ open class DeviceService(
         return repo.save(toAdd)
     }
 
-    fun deleteDevice(deviceEntity: DeviceEntity) {
-        repo.delete(deviceEntity)
+    fun deleteDevice(command: DeleteDeviceCommand) {
+        repo.delete(command.deviceToDelete)
     }
 }

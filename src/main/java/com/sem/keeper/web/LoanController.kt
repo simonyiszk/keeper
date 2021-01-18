@@ -1,11 +1,14 @@
 package com.sem.keeper.web
 
+import com.sem.keeper.service.command.ExtendLoanCommand
+import com.sem.keeper.service.command.NewLoanCommand
+import com.sem.keeper.service.command.NewLoanRequestCommand
+import com.sem.keeper.service.command.TakeBackLoanCommand
 import com.sem.keeper.entity.LoanEntity
 import com.sem.keeper.entity.UserEntity
 import com.sem.keeper.repo.DeviceRepository
 import com.sem.keeper.repo.LoanRepository
 import com.sem.keeper.repo.UserRepository
-import com.sem.keeper.service.DeviceAlreadyOnLoanException
 import com.sem.keeper.service.LoanRequestService
 import com.sem.keeper.service.LoanService
 import org.springframework.stereotype.Controller
@@ -60,7 +63,7 @@ class LoanController(
             redirectAttributes.addFlashAttribute("message", "A kölcsönzés nem található")
             return RedirectView("/loan/list")
         }
-        loanService.visszahoz(loanEntity.get(), user)
+        loanService.visszahoz(TakeBackLoanCommand(loanEntity.get(), user))
         loanEntity.get().note = loanEntityNote.note
         loanRepository.save(loanEntity.get())
         return RedirectView("/loan/list")
@@ -69,7 +72,7 @@ class LoanController(
     @GetMapping("/extend/{loanid}")
     fun extendLoan(@PathVariable("loanid") loanid: String): RedirectView {
         val loanEntity = loanRepository.findById(loanid.toLong())
-        loanService.hosszabbit(loanEntity.get())
+        loanService.hosszabbit(ExtendLoanCommand(loanEntity.get()))
         return RedirectView("/loan/list")
     }
 
@@ -104,12 +107,8 @@ class LoanController(
     ): RedirectView {
         val device = deviceRepository.findById(deviceid).get()
         val tarhaUser = userRepository.findById(userid)
-        try {
-            loanService.newLoan(device, user, tarhaUser.get(), note)
-        } catch (ex: DeviceAlreadyOnLoanException) {
-            redirectAttributes.addFlashAttribute("message", "Az eszköz már ki van adva :(")
-        }
-        return RedirectView("/device/" + device.id)
+        val result = loanService.newLoan(NewLoanCommand(device, user, tarhaUser.get(), note.orElse(null)))
+        return RedirectView("/device/${device.id}")
     }
 
     @GetMapping("/request/{deviceid}")
@@ -124,11 +123,16 @@ class LoanController(
 
     @GetMapping("/request/{deviceid}/ok")
     fun requestDeviceOk(
-        @SessionAttribute(required = false) user: UserEntity,
+        @SessionAttribute user: UserEntity,
         @PathVariable("deviceid") deviceid: String
     ): RedirectView {
         val device = deviceRepository.findById(deviceid.toLong()).get()
-        loanRequestService.addLoanRequest(user, device)
+        loanRequestService.addLoanRequest(
+            NewLoanRequestCommand(
+                user = user,
+                deviceEntity = device
+            )
+        )
         return RedirectView("/")
     }
 }

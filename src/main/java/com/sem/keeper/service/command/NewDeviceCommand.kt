@@ -1,4 +1,4 @@
-package com.sem.keeper.command
+package com.sem.keeper.service.command
 
 import javax.validation.constraints.NotBlank
 

@@ -1,60 +1,58 @@
 package com.sem.keeper.service
 
-import com.sem.keeper.entity.DeviceEntity
 import com.sem.keeper.entity.LoanEntity
 import com.sem.keeper.entity.LoanRequestEntity
 import com.sem.keeper.entity.UserEntity
 import com.sem.keeper.repo.LoanRepository
+import com.sem.keeper.service.command.*
+import com.sem.keeper.service.result.NewLoanResult
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
 import javax.transaction.Transactional
 
 @Service
 open class LoanService(private val loanRepository: LoanRepository) {
-    @Throws(DeviceAlreadyOnLoanException::class)
-    open fun fromLoanRequest(loanRequestEntity: LoanRequestEntity, kiad: UserEntity): LoanEntity {
-        if (loanRequestEntity.deviceEntity!!.isKiadva) {
-            throw DeviceAlreadyOnLoanException("Device is already on loan")
-        }
-        val neu = LoanEntity(loanRequestEntity, kiad)
-        return loanRepository.save(neu)
+
+    open fun fromLoanRequest(command: AcceptLoanRequestCommand): NewLoanResult {
+        return newLoan(
+            NewLoanCommand(
+                deviceEntity = command.loanRequestEntity.deviceEntity!!,
+                kiad = command.kiad,
+                kivesz = command.loanRequestEntity.elvinne!!
+            )
+        )
     }
 
-    @Throws(DeviceAlreadyOnLoanException::class)
     @Transactional
-    open fun newLoan(
-        deviceEntity: DeviceEntity,
-        kiad: UserEntity,
-        kivesz: UserEntity,
-        note: Optional<String>
-    ): LoanEntity {
-        if (deviceEntity.isKiadva) throw DeviceAlreadyOnLoanException("F")
+    open fun newLoan(command: NewLoanCommand): NewLoanResult {
+        if (command.deviceEntity.isKiadva) return NewLoanResult.NewLoanFailure("Device already on loan")
         val toAdd = LoanEntity(
-            deviceEntity = deviceEntity,
-            elvitte = kivesz,
-            kiadta = kiad,
+            deviceEntity = command.deviceEntity,
+            elvitte = command.kivesz,
+            kiadta = command.kiad,
             takeDate = LocalDateTime.now(),
             backDatePlanned = LocalDateTime.now().plusDays(7),
-            note = note.orElse(null)
+            note = command.note
         )
-        return loanRepository.save(toAdd)
+        return NewLoanResult.NewLoanSuccess(loanRepository.save(toAdd))
     }
 
     @Transactional
-    open fun hosszabbit(loanEntity: LoanEntity) {
-        loanEntity.backDatePlanned = LocalDateTime.now().plusDays(7)
+    open fun hosszabbit(command: ExtendLoanCommand) {
+        val loanEntityPersisted = loanRepository.save(command.loanEntity)
+        loanEntityPersisted.backDatePlanned = LocalDateTime.now().plusDays(7)
     }
 
     @Transactional
-    open fun visszahoz(loanEntity: LoanEntity, backUser: UserEntity?) {
-        loanEntity.backDateReal = LocalDateTime.now()
-        loanEntity.visszavette = backUser
+    open fun visszahoz(command: TakeBackLoanCommand) {
+        val loanEntityPersisted = loanRepository.save(command.loanEntity)
+        loanEntityPersisted.backDateReal = LocalDateTime.now()
+        loanEntityPersisted.visszavette = command.backUser
     }
 
     @Transactional
-    open fun editNote(loanEntity: LoanEntity, note: String?): Boolean {
-        loanEntity.note = note
+    open fun editNote(command: ChangeLoanNoteCommand): Boolean {
+        command.loanEntity.note = command.note
         return true
     }
 }

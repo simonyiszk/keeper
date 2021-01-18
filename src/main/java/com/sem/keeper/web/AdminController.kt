@@ -3,6 +3,7 @@ package com.sem.keeper.web
 import com.sem.keeper.repo.UserRepository
 import com.sem.keeper.service.GoodMusicService
 import com.sem.keeper.service.UserService
+import com.sem.keeper.service.command.DeleteUserCommand
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,11 +19,19 @@ class AdminController(
     private val userService: UserService
 ) {
     @GetMapping("/deleteuser")
-    fun deleteuser(@RequestParam useremail: String): RedirectView {
+    @Deprecated("Why did I do this?")
+    fun deleteUser(@RequestParam useremail: String): RedirectView {
         val user = userRepository.findByEmail(useremail)
         if (user != null) {
-            userService.deleteUser(user)
+            userService.deleteUser(DeleteUserCommand(user))
         }
+        return RedirectView("/admin/users")
+    }
+
+    @GetMapping("/deleteUserById")
+    fun deleteUser(@RequestParam userId: Long): RedirectView {
+        val user = userRepository.findById(userId)
+        user.ifPresent { userService.deleteUser(DeleteUserCommand(it)) }
         return RedirectView("/admin/users")
     }
 

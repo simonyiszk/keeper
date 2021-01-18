@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse
 class SemAuthSuccessHandler : AuthenticationSuccessHandler {
 
     @field:Autowired
-    private var userRepository: UserRepository? = null
+    private lateinit var userRepository: UserRepository
 
     override fun onAuthenticationSuccess(
         request: HttpServletRequest,
@@ -20,7 +20,7 @@ class SemAuthSuccessHandler : AuthenticationSuccessHandler {
         authentication: Authentication
     ) {
         val name = authentication.name
-        val user = userRepository!!.findByEmail(name)
+        val user = userRepository.findByEmail(name)
         val session = request.session
         session.setAttribute("user", user)
         response.status = HttpServletResponse.SC_OK
